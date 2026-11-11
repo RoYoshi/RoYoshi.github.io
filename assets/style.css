@@ -1,0 +1,473 @@
+/* RoYoshi.github.io: FE-Xico Aurora on the web.
+   Pure black like an OLED panel; magenta is structure (rules, the family tree),
+   green is interaction (links, focus); text and secondary text are Aurora's own.
+   Headings are pixel drawings (tools/build.py), scaled in whole CSS pixels. */
+
+:root {
+  --black: #000000;
+  --text: #E8EFEB;
+  --muted: #8D9C98;
+  --magenta: #FF00FF;
+  --green: #00FF00;
+  --carpet: #D8C46A;
+
+  --mark: 96px;     /* project icon */
+  --gutter: 28px;   /* icon to text */
+  --branch: 32px;   /* family tree: line to a child's icon */
+  --measure: 66ch;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--black);
+  -webkit-text-size-adjust: 100%;
+  /* The full-width rule and the carpet reach the window's edges, never past them. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--black);
+  /* The reader's own desktop font: on FE-XicoOS, whatever Plasma is set to. */
+  font-family: system-ui, "Noto Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+
+a {
+  color: var(--green);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  padding: 8px 12px;
+  background: var(--black);
+  border: 1px solid var(--green);
+  z-index: 1;
+}
+
+.skip:focus {
+  top: 16px;
+}
+
+/* Pixel headings ------------------------------------------------------------- */
+
+.pixel {
+  display: block;
+  width: calc(var(--px) * var(--w));
+  height: calc(var(--px) * var(--h));
+  fill: currentColor;
+  overflow: visible;
+}
+
+.pixel--hero {
+  --px: 9px;
+}
+
+.pixel .dot {
+  fill: var(--green);
+}
+
+.pixel--mark {
+  --px: 4px;
+}
+
+.pixel--name {
+  --px: 3px;
+}
+
+/* Masthead -------------------------------------------------------------------- */
+
+.masthead,
+main,
+.colophon {
+  width: min(100% - 48px, 960px);
+  margin-inline: auto;
+}
+
+.masthead {
+  padding-block: 96px 56px;
+}
+
+.masthead h1 {
+  margin: 0 0 40px;
+  line-height: 0;
+}
+
+.intro {
+  max-width: 34em;
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.45;
+}
+
+.profile {
+  margin: 20px 0 0;
+  color: var(--muted);
+}
+
+/* The magenta edge, like the FE-XicoOS panel's: full width, one pixel. */
+main {
+  position: relative;
+  padding-top: 72px;
+}
+
+main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  border-top: 1px solid var(--magenta);
+}
+
+/* Groups ------------------------------------------------------------------------ */
+
+.group + .group {
+  margin-top: 112px;
+}
+
+.group h2 {
+  margin: 0 0 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+.group .note {
+  max-width: var(--measure);
+  margin: 0 0 40px;
+  color: var(--muted);
+}
+
+.group h2 + .repo,
+.group h2 + .tree {
+  margin-top: 40px;
+}
+
+/* A repository ------------------------------------------------------------------ */
+
+.repo {
+  display: grid;
+  grid-template-columns: var(--mark) minmax(0, 1fr);
+  column-gap: var(--gutter);
+  align-items: start;
+}
+
+.repo__mark {
+  width: var(--mark);
+  height: var(--mark);
+}
+
+.repo__mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.repo__mark--pixel {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--magenta);
+}
+
+.repo__body {
+  max-width: var(--measure);
+  padding-top: 18px;
+}
+
+.repo__name {
+  margin: 0;
+  line-height: 0;
+}
+
+.where {
+  margin: 18px 0 20px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.where .path {
+  white-space: nowrap;
+}
+
+span.path {
+  color: var(--text);
+}
+
+.repo p {
+  margin: 0 0 14px;
+}
+
+.repo p.where {
+  margin-bottom: 20px;
+}
+
+.inside {
+  margin: 4px 0 18px;
+  padding-left: 1.2em;
+}
+
+.inside li + li {
+  margin-top: 6px;
+}
+
+.inside li::marker {
+  color: var(--magenta);
+}
+
+/* Facts: a two-column list, terms in the secondary text colour. */
+.facts {
+  display: grid;
+  grid-template-columns: 9.5em minmax(0, 1fr);
+  gap: 6px 24px;
+  margin: 24px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgb(255 0 255 / 0.35);
+  font-size: 0.9375rem;
+}
+
+.facts dt {
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 0;
+}
+
+.aside {
+  color: var(--muted);
+}
+
+.bar {
+  display: flex;
+  width: min(100%, 320px);
+  height: 6px;
+  margin: 9px 0 8px;
+  gap: 2px;
+}
+
+.bar span {
+  flex: var(--share) 1 0;
+  min-width: 2px;
+  background: var(--colour);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  background: var(--colour);
+  vertical-align: 0.05em;
+}
+
+/* The FE-XicoOS family tree: one magenta line from the system to the apps built
+   into it. The line runs down the middle of the icons. */
+.repo--root {
+  position: relative;
+}
+
+.repo--root::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--mark) / 2);
+  top: calc(var(--mark) + 12px);
+  bottom: 0;
+  border-left: 1px solid var(--magenta);
+}
+
+.tree {
+  margin: 0 0 0 calc(var(--mark) / 2);
+  padding: 0;
+  list-style: none;
+}
+
+.tree > li {
+  position: relative;
+  padding: 64px 0 0 var(--branch);
+  border-left: 1px solid var(--magenta);
+}
+
+.tree > li:last-child {
+  border-left-color: transparent;
+}
+
+.tree > li::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: calc(var(--branch) - 10px);
+  height: calc(64px + var(--mark) / 2);
+  border-left: 1px solid var(--magenta);
+  border-bottom: 1px solid var(--magenta);
+}
+
+/* The game: the carpet of Level 0, the one colour that is not Aurora's. */
+.group--game h2 {
+  color: var(--carpet);
+}
+
+.group--game::before {
+  content: "";
+  display: block;
+  height: 120px;
+  margin: 0 calc(50% - 50vw) 40px;
+  background:
+    linear-gradient(to bottom, rgb(0 0 0 / 0) 40%, var(--black)),
+    url("carpet.jpg") 0 0 / 256px 256px;
+  filter: saturate(1.15);
+}
+
+.repo__mark--carpet {
+  background: url("carpet.jpg") 0 0 / 256px 256px;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.6);
+}
+
+.group--game .facts {
+  border-top-color: rgb(216 196 106 / 0.4);
+}
+
+.group--game .inside li::marker {
+  color: var(--carpet);
+}
+
+/* Colophon ------------------------------------------------------------------ */
+
+.colophon {
+  margin-top: 128px;
+  padding: 28px 0 64px;
+  border-top: 1px solid var(--magenta);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.colophon p {
+  max-width: var(--measure);
+  margin: 0 0 6px;
+}
+
+/* Narrow screens -------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  :root {
+    --mark: 40px;
+    --gutter: 12px;
+    --branch: 14px;
+  }
+
+  .masthead,
+  main,
+  .colophon {
+    width: min(100% - 32px, 960px);
+  }
+
+  .masthead {
+    padding-block: 56px 40px;
+  }
+
+  .pixel--hero {
+    --px: 5px;
+  }
+
+  .pixel--name {
+    --px: 2px;
+  }
+
+  .pixel--mark {
+    --px: 2px;
+  }
+
+  .intro {
+    font-size: 1.1875rem;
+  }
+
+  .repo__body {
+    padding-top: 4px;
+  }
+
+  .where {
+    margin-top: 12px;
+  }
+
+  .tree > li {
+    padding-top: 48px;
+  }
+
+  .tree > li::before {
+    height: calc(48px + var(--mark) / 2);
+    width: calc(var(--branch) - 4px);
+  }
+
+  .repo--root::before {
+    top: calc(var(--mark) + 8px);
+  }
+
+  .facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .facts dd + dt {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .pixel--hero {
+    --px: 4px;
+  }
+}
+
+@media (forced-colors: active) {
+  .bar span,
+  .swatch {
+    forced-color-adjust: none;
+  }
+}
