@@ -20,11 +20,14 @@ import json
 import os
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data/repos.json"
 OUT = ROOT / "index.html"
+SITE = "https://royoshi.github.io/"
+# Aurora's colours, for the images the build draws (the sharing card, the favicon).
+BLACK, TEXT, MUTED, MAGENTA, GREEN = (0, 0, 0), (232, 239, 235), (141, 156, 152), (255, 0, 255), (0, 255, 0)
 UNIFONT_PATHS = [
     os.environ.get("UNIFONT", ""),
     "/usr/share/fonts/opentype/unifont/unifont.otf",
@@ -157,7 +160,11 @@ def facts(repo: dict) -> str:
         items.append(("Commits on main", f'{f["commits"]:,}{note}'))
     if f.get("pulls") is not None:
         items.append(("Pull requests", f'{f["pulls"]:,}'))
-    items.append(("License", esc(f["licence"]) if f.get("licence") else "None chosen yet"))
+    if f.get("license_text"):
+        parts = f["license_text"] if isinstance(f["license_text"], list) else [f["license_text"]]
+        items.append(("License", "<br>".join(esc(part) for part in parts)))
+    else:
+        items.append(("License", esc(f["licence"]) if f.get("licence") else "None chosen yet"))
     if f.get("release"):
         release = f["release"]
         items.append(("Latest release", f'<a href="{esc(release["url"])}">{esc(release["name"])}</a>, {esc(date(release["date"]))}'))
@@ -171,6 +178,10 @@ def mark(repo: dict) -> str:
     icon = repo.get("icon")
     if icon == "carpet":
         return '<div class="repo__mark repo__mark--carpet"></div>'
+    if icon and repo.get("icon_backdrop") == "carpet":
+        # The game's own icon, from its website, on the carpet (shown if it can't load).
+        return (f'<div class="repo__mark repo__mark--carpet"><img src="{esc(icon)}" alt="" width="96" height="96" '
+                f'loading="lazy" decoding="async" onerror="this.remove()"></div>')
     if icon:
         return f'<div class="repo__mark"><img src="{esc(icon)}" alt="" width="96" height="96"></div>'
     # No icon of its own: the lit "i" of the heading above, in a panel-black square.
@@ -188,12 +199,18 @@ def article(repo: dict, root: bool = False) -> str:
     inside = ""
     if repo.get("inside"):
         inside = '<ul class="inside">' + "".join(f"<li>{esc(item)}</li>" for item in repo["inside"]) + "</ul>"
+    credits = f'<p class="credits">{esc(repo["credits"])}</p>' if repo.get("credits") else ""
+    links = ""
+    if repo.get("links"):
+        links = '<ul class="links">' + "".join(
+            f'<li><a class="{"cta" if link.get("primary") else ""}" href="{esc(link["url"])}">{esc(link["text"])}</a></li>'
+            for link in repo["links"]) + "</ul>"
     classes = "repo repo--root" if root else "repo"
     return (f'<article class="{classes}" id="{key}" aria-labelledby="{key}-name">{mark(repo)}'
             f'<div class="repo__body">'
             f'<h3 class="repo__name" id="{key}-name"><span class="visually-hidden">{esc(repo["name"])}</span>'
             f'{pixel_svg(repo["name"], "pixel--name")}</h3>'
-            f'<p class="where">{where}</p>{paragraphs}{inside}{facts(repo)}</div></article>')
+            f'<p class="where">{where}</p>{paragraphs}{credits}{links}{inside}{facts(repo)}</div></article>')
 
 
 def group(data: dict) -> str:
@@ -214,6 +231,7 @@ def page(data: dict) -> str:
     count = sum(len(g["repos"]) for g in data["groups"])
     private = sum(1 for g in data["groups"] for r in g["repos"] if r["private"])
     groups = "".join(group(g) for g in data["groups"])
+    elsewhere = "".join(f'<li><a href="{esc(link["url"])}">{esc(link["text"])}</a></li>' for link in data["links"])
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -223,7 +241,19 @@ def page(data: dict) -> str:
 <meta name="description" content="{esc(data["intro"])}">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#000000">
-<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="canonical" href="{SITE}">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{esc(data["owner"])}">
+<meta property="og:title" content="{esc(data["owner"])}: repositories">
+<meta property="og:description" content="{esc(data["intro"])}">
+<meta property="og:url" content="{SITE}">
+<meta property="og:image" content="{SITE}assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{esc(data["owner"])}, drawn in pixels, with the FE-XicoOS, FE-Xico UpdateR and FE-Xico Doctor icons and the Level 0 carpet">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -231,7 +261,8 @@ def page(data: dict) -> str:
 <header class="masthead">
 <h1><span class="visually-hidden">{esc(data["owner"])}</span>{pixel_svg(data["owner"], "pixel--hero", glow_dot=True)}</h1>
 <p class="intro">{esc(data["intro"])}</p>
-<p class="profile"><a href="{esc(data["profile"])}">github.com/{esc(data["owner"])}</a>, with {count} repositories, {private} of them private.</p>
+<ul class="elsewhere">{elsewhere}</ul>
+<p class="profile">{count} repositories, {private} of them private.</p>
 </header>
 <main id="main">
 {groups}
@@ -245,10 +276,78 @@ def page(data: dict) -> str:
 """
 
 
+def paint(image: Image.Image, text: str, x: int, y: int, scale: int, glow_dot: bool = False) -> tuple[int, int]:
+    """Draws the text's pixels at scale; returns its size. The dot of a final "i" is lit."""
+    rows, width, _ = bitmap(text)
+    draw = ImageDraw.Draw(image)
+    start = round(FONT.getlength(text[:-1])) if glow_dot and text.endswith("i") else width
+    dot_rows = set()
+    if start < width:
+        y0 = next(r for r, row in enumerate(rows) if any(row[start:]))
+        while y0 < len(rows) and any(rows[y0][start:]):
+            dot_rows.add(y0)
+            y0 += 1
+    for r, row in enumerate(rows):
+        for c, on in enumerate(row):
+            if on:
+                lit = c >= start and r in dot_rows
+                draw.rectangle([x + c * scale, y + r * scale, x + (c + 1) * scale - 1, y + (r + 1) * scale - 1],
+                               fill=GREEN if lit else TEXT)
+    return width * scale, len(rows) * scale
+
+
+def halo(image: Image.Image, text: str, x: int, y: int, scale: int) -> None:
+    """A soft green light around the dot of the final "i" (drawn before the pixels)."""
+    rows, width, _ = bitmap(text)
+    start = round(FONT.getlength(text[:-1]))
+    r0 = next(r for r, row in enumerate(rows) if any(row[start:]))
+    c0 = next(c for c in range(start, width) if rows[r0][c])
+    cx, cy = x + (c0 + 0.5) * scale, y + (r0 + 1) * scale
+    light = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    ImageDraw.Draw(light).ellipse([cx - 3 * scale, cy - 3 * scale, cx + 3 * scale, cy + 3 * scale], fill=GREEN + (150,))
+    light = light.filter(ImageFilter.GaussianBlur(scale * 1.6))
+    image.alpha_composite(light)
+
+
+def favicon() -> None:
+    """The lit "i" in a panel-black square with a magenta edge."""
+    for size, name in ((64, "favicon.png"), (180, "apple-touch-icon.png")):
+        scale = max(1, (size * 3 // 4) // 12)  # the i is 12 pixels tall: about three quarters of the square
+        image = Image.new("RGBA", (size, size), BLACK + (255,))
+        rows, width, _ = bitmap("i")
+        x = (size - width * scale) // 2
+        y = (size - len(rows) * scale) // 2
+        halo(image, "i", x, y, scale)
+        paint(image, "i", x, y, scale, glow_dot=True)
+        edge = max(1, size // 32)
+        ImageDraw.Draw(image).rectangle([0, 0, size - 1, size - 1], outline=MAGENTA, width=edge)
+        image.convert("RGB").save(ROOT / "assets" / name, optimize=True)
+
+
+def card(data: dict) -> None:
+    """The picture shown when the page is shared (1200 x 630)."""
+    image = Image.new("RGBA", (1200, 630), BLACK + (255,))
+    scale = 13
+    halo(image, data["owner"], 96, 120, scale)
+    paint(image, data["owner"], 96, 120, scale, glow_dot=True)
+    draw = ImageDraw.Draw(image)
+    draw.line([(0, 380), (1200, 380)], fill=MAGENTA, width=2)
+    x = 96
+    for path in ("assets/icons/fe-xicoos.png", "assets/icons/fe-xico-updater.png", "assets/icons/fe-xico-doctor.png"):
+        icon = Image.open(ROOT / path).convert("RGBA").resize((128, 128), Image.LANCZOS)
+        image.alpha_composite(icon, (x, 430))
+        x += 168
+    carpet = Image.open(ROOT / "assets/carpet.jpg").convert("RGBA").resize((128, 128), Image.LANCZOS)
+    image.alpha_composite(carpet, (x, 430))
+    image.convert("RGB").save(ROOT / "assets/og.png", optimize=True)
+
+
 def main() -> None:
     data = json.loads(DATA.read_text())
     OUT.write_text(page(data))
-    print(f"wrote {OUT.relative_to(ROOT)}")
+    favicon()
+    card(data)
+    print(f"wrote {OUT.relative_to(ROOT)}, assets/favicon.png, assets/apple-touch-icon.png, assets/og.png")
 
 
 if __name__ == "__main__":

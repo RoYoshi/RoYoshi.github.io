@@ -11,8 +11,9 @@ source stays private.
 | `index.html` | The page. Built by `tools/build.py`; don't edit it by hand |
 | `data/repos.json` | The content: each repository's description, what's inside, and its facts |
 | `assets/style.css` | The look: FE-Xico Aurora colours, the family tree, the narrow-screen layout |
-| `assets/icons/`, `assets/carpet.jpg`, `assets/favicon.png` | The apps' own icons, the Level 0 carpet and the top hat |
-| `tools/build.py` | Writes `index.html` from the data |
+| `assets/icons/`, `assets/carpet.jpg` | The apps' own icons and the Level 0 carpet. The Far Backrooms' icon loads from thefarbackrooms.com, with the carpet behind it |
+| `assets/favicon.png`, `assets/apple-touch-icon.png`, `assets/og.png` | The tab icon, the home-screen icon and the picture shown when the page is shared; all drawn by `tools/build.py` |
+| `tools/build.py` | Writes `index.html` and the drawn images from the data |
 | `.nojekyll` | Tells GitHub Pages to publish the files as they are |
 
 ## Changing the page
@@ -24,7 +25,7 @@ source stays private.
    (Fedora: `unifont-fonts`, Debian/Ubuntu: `fonts-unifont`), because the
    headings are drawn from Unifont's pixels. Set `UNIFONT=/path/to/unifont.otf`
    if it is installed somewhere else.
-3. Open `index.html` in a browser to check it, then commit both files.
+3. Open `index.html` in a browser to check it, then commit it with the redrawn images.
 
 ## Publishing
 

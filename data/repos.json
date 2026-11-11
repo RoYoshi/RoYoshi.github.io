@@ -1,6 +1,5 @@
 {
   "owner": "RoYoshi",
-  "profile": "https://github.com/RoYoshi",
   "as_of": "2026-11-11",
   "intro": "An operating system, the two apps built into it, a horror game and this site: every repository on RoYoshi's GitHub, public and private.",
   "groups": [
@@ -33,7 +32,16 @@
             "pulls": 74,
             "licence": "Apache-2.0",
             "release": null,
-            "languages": {"Python": 690266, "Shell": 312814, "QML": 238835, "JavaScript": 84935, "C++": 61408, "Dockerfile": 31828, "Just": 16779, "CMake": 5573}
+            "languages": {
+              "Python": 690266,
+              "Shell": 312814,
+              "QML": 238835,
+              "JavaScript": 84935,
+              "C++": 61408,
+              "Dockerfile": 31828,
+              "Just": 16779,
+              "CMake": 5573
+            }
           }
         },
         {
@@ -55,7 +63,18 @@
             "pulls": 12,
             "licence": "GPL-2.0-or-later",
             "release": null,
-            "languages": {"QML": 123697, "C++": 122447, "Python": 31113, "CMake": 11414, "JavaScript": 3179, "Just": 1847, "Shell": 1085, "C": 822, "HCL": 140, "Rhai": 44}
+            "languages": {
+              "QML": 123697,
+              "C++": 122447,
+              "Python": 31113,
+              "CMake": 11414,
+              "JavaScript": 3179,
+              "Just": 1847,
+              "Shell": 1085,
+              "C": 822,
+              "HCL": 140,
+              "Rhai": 44
+            }
           }
         },
         {
@@ -75,8 +94,15 @@
             "commits": 14,
             "pulls": 4,
             "licence": "Apache-2.0",
-            "release": {"name": "1.0.0", "date": "2026-11-06", "url": "https://github.com/RoYoshi/Doctor/releases/tag/v1.0.0"},
-            "languages": {"Python": 301299, "Shell": 7949}
+            "release": {
+              "name": "1.0.0",
+              "date": "2026-11-06",
+              "url": "https://github.com/RoYoshi/Doctor/releases/tag/v1.0.0"
+            },
+            "languages": {
+              "Python": 301299,
+              "Shell": 7949
+            }
           }
         }
       ]
@@ -90,11 +116,11 @@
           "name": "The Far Backrooms",
           "repo": "RoYoshi/backroomsproject",
           "private": true,
-          "icon": "carpet",
+          "icon": "https://thefarbackrooms.com/assets/branding/icon-512.png",
           "role": "single",
           "summary": [
-            "A love letter to internet horror as a whole, with The Backrooms as its poster child. It is a multiplayer game that runs in the browser: you wander the yellow rooms of Level 0 while the Hound and the Smiler hunt you, and everyone in a session meets the same monsters.",
-            "The browser draws the level with PixiJS, and a small Node.js server runs the monsters and connects the players. The game is built in stages; the current one, 2F, gives the monsters shared intelligence that works only from what they have actually seen. Playtesting of this stage is still to come."
+            "A browser-first multiplayer survival-horror game, and a love letter to internet horror as a whole, with The Backrooms as its poster child. You wander the yellow rooms of Level 0 while the Hound and the Smiler hunt you, and everyone in a session meets the same monsters.",
+            "The browser draws the level with PixiJS, and a Node.js server runs the monsters and connects the players. It is in active development, built in stages; the current one, 2F, gives the monsters shared intelligence that works only from what they have actually seen."
           ],
           "inside": [],
           "facts": {
@@ -104,8 +130,31 @@
             "pulls": 1,
             "licence": null,
             "release": null,
-            "languages": {"JavaScript": 1373200, "Python": 134717, "HTML": 10324, "Shell": 1923, "Batchfile": 137}
-          }
+            "languages": {
+              "JavaScript": 1373200,
+              "Python": 134717,
+              "HTML": 10324,
+              "Shell": 1923,
+              "Batchfile": 137
+            },
+            "license_text": [
+              "Code: all rights reserved",
+              "Game design and Backrooms-derived content: CC BY-SA 3.0"
+            ]
+          },
+          "icon_backdrop": "carpet",
+          "credits": "Made by RoYoshi (programming, game, level, graphic and web design) and ₘₐᵣᵢᵢₖᵧᵤ (creative direction, music, sound, QA and community).",
+          "links": [
+            {
+              "text": "Visit thefarbackrooms.com",
+              "url": "https://thefarbackrooms.com/",
+              "primary": true
+            },
+            {
+              "text": "Full credits",
+              "url": "https://thefarbackrooms.com/credits.html"
+            }
+          ]
         }
       ]
     },
@@ -135,6 +184,18 @@
           }
         }
       ]
+    }
+  ],
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/RoYoshi",
+      "text": "github.com/RoYoshi"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/channel/UCxSQ4Hz5rsYpARqQLK0wmMA",
+      "text": "YouTube"
     }
   ]
 }
