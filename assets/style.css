@@ -151,6 +151,32 @@ main,
   color: var(--muted);
 }
 
+/* The page's parts, for jumping straight to one. */
+.jump ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 36px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid rgb(255 0 255 / 0.35);
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.jump a {
+  color: var(--text);
+  text-decoration-color: rgb(232 239 235 / 0.4);
+}
+
+.jump a:hover {
+  color: var(--green);
+  text-decoration-color: currentColor;
+}
+
+.group {
+  scroll-margin-top: 24px;
+}
+
 /* The magenta edge, like the FE-XicoOS panel's: full width, one pixel. */
 main {
   position: relative;
@@ -404,12 +430,21 @@ span.path {
   display: inline-block;
   padding: 10px 18px;
   border: 1px solid currentColor;
-  color: var(--carpet);
+  color: var(--green);
   font-weight: 600;
   text-decoration: none;
 }
 
 .cta:hover {
+  color: var(--black);
+  background: var(--green);
+}
+
+.group--game .cta {
+  color: var(--carpet);
+}
+
+.group--game .cta:hover {
   color: var(--black);
   background: var(--carpet);
 }
@@ -429,6 +464,104 @@ span.path {
 
 .group--game :focus-visible {
   outline-color: var(--carpet);
+}
+
+/* Certifications ------------------------------------------------------------- */
+
+.pixel--cert {
+  --px: 2px;
+}
+
+.certs__issuer {
+  margin: 40px 0 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.certs__list,
+.stacks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One certification: its name in pixels, then what it covers. */
+.cert {
+  display: grid;
+  grid-template-columns: 220px minmax(0, var(--measure));
+  column-gap: var(--gutter);
+  align-items: baseline;
+  padding: 14px 0;
+  border-top: 1px solid rgb(255 0 255 / 0.25);
+}
+
+.cert__label {
+  display: block;
+  color: var(--text);
+  transition: color 120ms ease-out;
+}
+
+.cert__label .pixel {
+  transform: translateY(3px);
+}
+
+.cert__scope {
+  display: block;
+  color: var(--muted);
+}
+
+/* A stackable: its name, and the certifications it stands for. */
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  max-width: calc(220px + var(--gutter) + var(--measure));
+  padding: 12px 0;
+  border-top: 1px solid rgb(255 0 255 / 0.25);
+}
+
+.stack__parts {
+  display: flex;
+  gap: 6px;
+}
+
+.part {
+  padding: 1px 8px;
+  border: 1px solid rgb(232 239 235 / 0.35);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.stack:hover .part {
+  border-color: var(--green);
+  color: var(--text);
+}
+
+/* Pointing at a stackable lights up the certifications it is made of. */
+.certs:has(.stack.uses-aplus:hover) .cert--aplus .cert__label,
+.certs:has(.stack.uses-netplus:hover) .cert--netplus .cert__label,
+.certs:has(.stack.uses-secplus:hover) .cert--secplus .cert__label,
+.certs:has(.stack.uses-linuxplus:hover) .cert--linuxplus .cert__label {
+  color: var(--green);
+}
+
+/* YouTube ---------------------------------------------------------------------- */
+
+.channel {
+  max-width: var(--measure);
+  margin-top: 32px;
+}
+
+.channel__name {
+  margin: 0 0 18px;
+  line-height: 0;
+}
+
+.channel p {
+  margin: 0;
 }
 
 /* Colophon ------------------------------------------------------------------ */
@@ -509,6 +642,26 @@ span.path {
 
   .facts dd + dt {
     margin-top: 10px;
+  }
+
+  .cert {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+  }
+
+  .cert__label .pixel {
+    transform: none;
+  }
+
+  .stack {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert__label {
+    transition: none;
   }
 }
 

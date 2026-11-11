@@ -1,7 +1,7 @@
 {
   "owner": "RoYoshi",
   "as_of": "2026-11-11",
-  "intro": "An operating system, the two apps built into it, a horror game and this site: every repository on RoYoshi's GitHub, public and private.",
+  "intro": "An operating system and the apps built into it, a horror game, eleven IT certifications and a YouTube channel: what RoYoshi builds, designs and knows.",
   "groups": [
     {
       "id": "fe-xico",
@@ -190,12 +190,118 @@
     {
       "label": "GitHub",
       "url": "https://github.com/RoYoshi",
-      "text": "github.com/RoYoshi"
+      "text": "GitHub"
     },
     {
       "label": "YouTube",
-      "url": "https://www.youtube.com/channel/UCxSQ4Hz5rsYpARqQLK0wmMA",
+      "url": "https://www.youtube.com/@Ro_Yoshi",
       "text": "YouTube"
+    },
+    {
+      "label": "Steam",
+      "url": null,
+      "text": "Steam"
+    },
+    {
+      "label": "Credly",
+      "url": null,
+      "text": "Certifications on Credly"
     }
-  ]
+  ],
+  "certifications": {
+    "verify_url": null,
+    "note": "Eleven certifications: four from CompTIA, three from Cisco, and the four that CompTIA awards for holding its certifications together.",
+    "groups": [
+      {
+        "title": "CompTIA",
+        "certs": [
+          {
+            "id": "aplus",
+            "short": "A+",
+            "name": "CompTIA A+",
+            "scope": "Hardware, operating systems, networking basics and troubleshooting: the groundwork of IT support."
+          },
+          {
+            "id": "netplus",
+            "short": "Network+",
+            "name": "CompTIA Network+",
+            "scope": "Designing, running and troubleshooting wired and wireless networks."
+          },
+          {
+            "id": "secplus",
+            "short": "Security+",
+            "name": "CompTIA Security+",
+            "scope": "Threats, secure architecture, security operations and responding to incidents."
+          },
+          {
+            "id": "linuxplus",
+            "short": "Linux+",
+            "name": "CompTIA Linux+",
+            "scope": "Running Linux systems: storage, services, security, scripting and troubleshooting."
+          }
+        ]
+      },
+      {
+        "title": "Cisco Certified Support Technician (CCST)",
+        "certs": [
+          {
+            "id": "ccst-it",
+            "short": "IT Support",
+            "name": "CCST IT Support",
+            "scope": "Helping people with their computers: hardware, software, accounts and the help desk."
+          },
+          {
+            "id": "ccst-net",
+            "short": "Networking",
+            "name": "CCST Networking",
+            "scope": "Network basics: addressing, devices, services and finding what's wrong."
+          },
+          {
+            "id": "ccst-sec",
+            "short": "Cybersecurity",
+            "name": "CCST Cybersecurity",
+            "scope": "Security principles, network and endpoint security, vulnerability assessment and incident handling."
+          }
+        ]
+      }
+    ],
+    "stackables_title": "CompTIA stackable certifications",
+    "stackables": [
+      {
+        "name": "CompTIA Secure Infrastructure Specialist",
+        "uses": [
+          "aplus",
+          "netplus",
+          "secplus"
+        ]
+      },
+      {
+        "name": "CompTIA IT Operations Specialist",
+        "uses": [
+          "aplus",
+          "netplus"
+        ]
+      },
+      {
+        "name": "CompTIA Systems Support Specialist",
+        "uses": [
+          "aplus",
+          "linuxplus"
+        ]
+      },
+      {
+        "name": "CompTIA Linux Network Professional",
+        "uses": [
+          "netplus",
+          "linuxplus"
+        ]
+      }
+    ]
+  },
+  "youtube": {
+    "title": "On YouTube",
+    "handle": "@Ro_Yoshi",
+    "url": "https://www.youtube.com/@Ro_Yoshi",
+    "summary": "RoYoshi's gaming channel: Roblox, Team Fortress 2 and other Steam games, with edits, tips and the occasional jumpscare."
+  }
 }

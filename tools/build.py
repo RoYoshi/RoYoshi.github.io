@@ -227,17 +227,62 @@ def group(data: dict) -> str:
             f'<h2 id="{key}">{esc(data["title"])}</h2>{note}{body}</section>')
 
 
+def certifications(data: dict) -> str:
+    """The certifications: CompTIA's and Cisco's, then the stackables, each shown with
+    the certifications it is made of (pointing at one lights those up)."""
+    certs = data["certifications"]
+    names = {c["id"]: c["short"] for g in certs["groups"] for c in g["certs"]}
+    verify = ""
+    if certs.get("verify_url"):
+        verify = f' <a href="{esc(certs["verify_url"])}">Check them on Credly</a>.'
+    blocks = []
+    for g in certs["groups"]:
+        rows = "".join(
+            f'<li class="cert cert--{esc(c["id"])}"><span class="cert__label"><span class="visually-hidden">{esc(c["short"])}</span>'
+            f'{pixel_svg(c["short"], "pixel--cert")}</span>'
+            f'<span class="cert__text"><strong>{esc(c["name"])}</strong> <span class="cert__scope">{esc(c["scope"])}</span></span></li>'
+            for c in g["certs"])
+        blocks.append(f'<h3 class="certs__issuer">{esc(g["title"])}</h3><ul class="certs__list">{rows}</ul>')
+    stacks = "".join(
+        f'<li class="stack {" ".join("uses-" + esc(u) for u in s["uses"])}"><span class="stack__name">{esc(s["name"])}</span>'
+        f'<span class="stack__parts" aria-label="for holding {esc(", ".join(names[u] for u in s["uses"]))}">'
+        + "".join(f'<span class="part" aria-hidden="true">{esc(names[u])}</span>' for u in s["uses"]) + "</span></li>"
+        for s in certs["stackables"])
+    blocks.append(f'<h3 class="certs__issuer">{esc(certs["stackables_title"])}</h3><ul class="stacks">{stacks}</ul>')
+    return (f'<section class="group group--certs certs" id="certifications" aria-labelledby="g-certs">'
+            f'<h2 id="g-certs">Certifications</h2><p class="note">{esc(certs["note"])}{verify}</p>{"".join(blocks)}</section>')
+
+
+def youtube(data: dict) -> str:
+    yt = data["youtube"]
+    return (f'<section class="group group--youtube" id="youtube" aria-labelledby="g-youtube">'
+            f'<h2 id="g-youtube">{esc(yt["title"])}</h2>'
+            f'<div class="channel"><h3 class="channel__name"><span class="visually-hidden">{esc(yt["handle"])}</span>'
+            f'{pixel_svg(yt["handle"], "pixel--name")}</h3>'
+            f'<p>{esc(yt["summary"])}</p>'
+            f'<ul class="links"><li><a class="cta cta--video" href="{esc(yt["url"])}">Watch on YouTube</a></li></ul></div></section>')
+
+
 def page(data: dict) -> str:
     count = sum(len(g["repos"]) for g in data["groups"])
     private = sum(1 for g in data["groups"] for r in g["repos"] if r["private"])
-    groups = "".join(group(g) for g in data["groups"])
-    elsewhere = "".join(f'<li><a href="{esc(link["url"])}">{esc(link["text"])}</a></li>' for link in data["links"])
+    projects = [g for g in data["groups"] if g["id"] != "site"]
+    site = [g for g in data["groups"] if g["id"] == "site"]
+    groups = ("".join(group(g) for g in projects) + certifications(data) + youtube(data)
+              + "".join(group(g) for g in site))
+    # Links without an address yet (filled in data/repos.json) are left out.
+    elsewhere = "".join(f'<li><a href="{esc(link["url"])}">{esc(link["text"])}</a></li>'
+                        for link in data["links"] if link.get("url"))
+    total_certs = sum(len(g["certs"]) for g in data["certifications"]["groups"]) + len(data["certifications"]["stackables"])
+    jumps = [("#g-fe-xico", "FE-XicoOS"), ("#g-game", "The Far Backrooms"), ("#certifications", "Certifications"),
+             ("#youtube", "On YouTube")]
+    nav = "".join(f'<li><a href="{href}">{esc(text)}</a></li>' for href, text in jumps)
     return f"""<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(data["owner"])}: repositories</title>
+<title>{esc(data["owner"])}: projects, certifications and videos</title>
 <meta name="description" content="{esc(data["intro"])}">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#000000">
@@ -246,7 +291,7 @@ def page(data: dict) -> str:
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{esc(data["owner"])}">
-<meta property="og:title" content="{esc(data["owner"])}: repositories">
+<meta property="og:title" content="{esc(data["owner"])}: projects, certifications and videos">
 <meta property="og:description" content="{esc(data["intro"])}">
 <meta property="og:url" content="{SITE}">
 <meta property="og:image" content="{SITE}assets/og.png">
@@ -262,7 +307,8 @@ def page(data: dict) -> str:
 <h1><span class="visually-hidden">{esc(data["owner"])}</span>{pixel_svg(data["owner"], "pixel--hero", glow_dot=True)}</h1>
 <p class="intro">{esc(data["intro"])}</p>
 <ul class="elsewhere">{elsewhere}</ul>
-<p class="profile">{count} repositories, {private} of them private.</p>
+<p class="profile">{count} repositories ({private} of them private) and {total_certs} certifications.</p>
+<nav class="jump" aria-label="On this page"><ul>{nav}</ul></nav>
 </header>
 <main id="main">
 {groups}
