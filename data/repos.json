@@ -1,7 +1,7 @@
 {
   "owner": "RoYoshi",
   "as_of": "2026-11-12",
-  "intro": "An operating system and the apps built into it, a horror game, eleven IT certifications, a YouTube channel and 3,237 hours of Team Fortress 2: what RoYoshi builds, designs and knows.",
+  "intro": "I'm RoYoshi. I build a Linux distro and the apps in it, co-make a horror game, hold eleven IT certifications, run a YouTube channel, and have 3,237 hours in Team Fortress 2.",
   "about": {
     "roles": [
       "Programmer",
@@ -12,9 +12,9 @@
       "President of YEXICO"
     ],
     "paragraphs": [
-      "RoYoshi makes whole things, from the code to the logo: a Linux desktop with a look of its own and the apps built into it, and a multiplayer horror game with its own website.",
-      "He programs The Far Backrooms and designs its game, levels, website, logos and promotional art, together with co-creator ₘₐᵣᵢᵢₖᵧᵤ. He builds FE-XicoOS on Fedora, and drew its green top hat and the FE-Xico Doctor badge you see on this page himself.",
-      "Behind the projects are eleven IT certifications from CompTIA and Cisco, covering support, networking, Linux and security. Away from them he plays shooters of every kind, edits videos, and has been president of YEXICO, his own gaming community, since 2023."
+      "I build FE-XicoOS, a Linux desktop on Fedora, and the apps that ship with it. I also program The Far Backrooms, a multiplayer horror game that runs in the browser.",
+      "On the game I do the programming, the game and level design, the website, the logos and the promo art. ₘₐᵣᵢᵢₖᵧᵤ is the other co-creator. I drew the FE-XicoOS top hat and the FE-Xico Doctor badge on this page too.",
+      "I hold eleven IT certifications from CompTIA and Cisco. Outside of that I play a lot of shooters, edit videos, and have been president of YEXICO since 2023."
     ],
     "role_links": {
       "President of YEXICO": "#yexico"
@@ -27,13 +27,11 @@
       "./build --everything",
       "building an operating system",
       "presiding over YEXICO",
-      "drawing his own icons",
+      "drawing my own icons",
       "teaching the Hound to hunt",
       "playing Team Fortress 2",
       "grinding TF2 achievements (482/519)",
-      "collecting certifications",
       "editing the next jumpscare",
-      "staying determined",
       "noclipping into Level 0"
     ]
   },
@@ -128,7 +126,7 @@
           "icon": "assets/icons/fe-xico-updater.png",
           "role": "child",
           "summary": [
-            "The update app of FE-XicoOS, being written from scratch in C++ and Qt Quick. It checks for, downloads and rolls back FE-XicoOS updates, and shows the release notes, the update history and the technical details, in words anyone can follow.",
+            "The update app of FE-XicoOS, being written from scratch in C++ and Qt Quick. It checks for, downloads and rolls back FE-XicoOS updates, and shows the release notes, the update history and the technical details.",
             "It replaces the earlier updater based on Bazzite Updater by Robert French and contributors, which is kept as FE-Xico-UpdateR-olddy."
           ],
           "inside": [],
@@ -224,11 +222,11 @@
           "entities": [
             {
               "name": "The Hound",
-              "line": "Hunts with the pack: since stage 2F, what one has actually seen, the others can act on."
+              "line": "Hunts in a pack. Since stage 2F, what one Hound has seen, the others can act on."
             },
             {
               "name": "The Smiler",
-              "line": "A grin waiting in the dark, straight from the Backrooms canon."
+              "line": "The canon Smiler, from the Backrooms wiki."
             }
           ],
           "features": [
@@ -310,8 +308,8 @@
     }
   ],
   "skills": {
-    "title": "What he works with",
-    "note": "The tools and skills behind the projects above, each with where you can see it.",
+    "title": "What I work with",
+    "note": "What I use, and where on this page you can see it.",
     "areas": [
       {
         "name": "Programming",
@@ -547,12 +545,12 @@
     "title": "On YouTube",
     "handle": "@Ro_Yoshi",
     "url": "https://www.youtube.com/@Ro_Yoshi",
-    "summary": "RoYoshi's gaming channel: Roblox, Team Fortress 2 and other Steam games, with edits, tips and the occasional jumpscare."
+    "summary": "My gaming channel: Roblox, Team Fortress 2 and other Steam games. Edits, tips, and the occasional jumpscare."
   },
   "steam": {
     "title": "On Steam",
     "url": "https://steamcommunity.com/id/RoYoshi/",
-    "summary": "An FPS player first, and Team Fortress 2 most of all. On Steam he posts gameplay videos, screenshots and artwork, shares items on the Garry's Mod Workshop, writes reviews and a TF2 guide, and runs YEXICO, the gaming community he has been president of since 2023.",
+    "summary": "Mostly shooters, mostly Team Fortress 2. I also post videos, screenshots and artwork, have five items on the Garry's Mod Workshop, and wrote a TF2 guide.",
     "stats": [
       [
         "77",
@@ -607,8 +605,7 @@
     "title": "YEXICO",
     "motto": "YEXICO, THE NATION, THE REPUBLIC, THE POWER, THE- I forgor :(",
     "summary": [
-      "RoYoshi's gaming community, which he has led as president since 2023. It lives on Roblox, where he owns the YEXICO community and its own place is in the works, and on Steam as the group YEXICO Y.R.S, founded April 2, 2024.",
-      "Its flag is green and white, with a smile in the middle."
+      "My gaming community. I've been president since 2023. It's on Roblox, where our own place is in the works, and on Steam as YEXICO Y.R.S, founded April 2, 2024."
     ],
     "flag": "assets/yexico/flag.png",
     "stats": [
@@ -668,22 +665,22 @@
   },
   "favourites": {
     "title": "Favourites",
-    "note": "Off the clock: the games and the characters RoYoshi likes best of all time.",
+    "note": "My all-time top three of each.",
     "lists": [
       {
         "title": "Games",
         "items": [
           {
             "name": "Team Fortress 2",
-            "line": "Valve's class-based team shooter: 3,237 hours, 482 of 519 achievements, and a regular on his channel."
+            "line": "3,237 hours and counting."
           },
           {
             "name": "Roblox",
-            "line": "The platform where players make the games, and the other regular on his channel."
+            "line": "Where YEXICO lives."
           },
           {
             "name": "Undertale",
-            "line": "Toby Fox's RPG where nobody has to die."
+            "line": "Toby Fox, 2015."
           }
         ]
       },
@@ -693,20 +690,20 @@
           {
             "name": "Mr. Fantastic",
             "badge": "Tied #1",
-            "line": "Reed Richards of Marvel's Fantastic Four: a genius who builds whatever the problem needs, and stretches to reach it."
+            "line": "Reed Richards, Fantastic Four."
           },
           {
             "name": "Jack Walten",
             "badge": "Tied #1",
-            "line": "The man the tapes are named after in The Walten Files, Martin Walls's analog-horror series."
+            "line": "The Walten Files."
           },
           {
             "name": "Ryu",
-            "line": "Street Fighter's wandering martial artist, always training for the next fight."
+            "line": "Street Fighter."
           }
         ]
       }
     ],
-    "box": "* Knowing RoYoshi's favourites fills you with DETERMINATION."
+    "box": "* Reading this far fills you with DETERMINATION."
   }
 }

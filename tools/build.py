@@ -321,7 +321,7 @@ def about(data: dict, number: int) -> str:
     swatches = "".join(f'<span style="--colour:{c}"></span>'
                        for c in ("#000000", "#FF00FF", "#00FF00", "#D8C46A", "#8D9C98", "#E8EFEB"))
     # A neofetch, as on the FE-XicoOS desktop: the mark, then the facts.
-    fetch = (f'<figure class="fetch" aria-label="RoYoshi at a glance">'
+    fetch = (f'<figure class="fetch" aria-label="neofetch output">'
              f'<div class="fetch__bar" aria-hidden="true"><span></span><span></span><span></span>'
              f'<span class="fetch__title">Foot: ~</span></div>'
              f'<div class="fetch__body"><p class="fetch__cmd" aria-hidden="true">'
@@ -400,7 +400,7 @@ def yexico(data: dict, number: int) -> str:
                   f'data-title="{esc(vid["title"])}"><img src="https://i.ytimg.com/vi/{esc(vid["id"])}/hqdefault.jpg" alt="" '
                   f'width="480" height="360" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span>'
                   f'<span class="visually-hidden">Play {esc(vid["title"])}</span></a>'
-                  f'<figcaption>The anthem: {esc(vid["title"])}, on his channel.</figcaption></figure>')
+                  f'<figcaption>The anthem: {esc(vid["title"])}, on my channel.</figcaption></figure>')
     return (f'<section class="group group--yexico" id="yexico" aria-labelledby="g-yexico">'
             f'{heading("g-yexico", number, y["title"])}'
             f'<div class="yexico"><div class="flagpole"><span class="pole" aria-hidden="true"></span>'
@@ -536,7 +536,7 @@ def not_found(data: dict) -> str:
 <body>
 <main class="lost">
 <h1><span class="visually-hidden">404</span>{pixel_svg("404", "pixel--hero")}</h1>
-<p class="intro">You noclipped out of the page. There's nothing at this address, only the hum of the fluorescent lights.</p>
+<p class="intro">You noclipped out of the page. There's nothing at this address.</p>
 <ul class="links"><li><a class="cta" href="/">Back to {esc(data["owner"])}</a></li></ul>
 </main>
 </body>

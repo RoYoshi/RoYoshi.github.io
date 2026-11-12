@@ -110,7 +110,7 @@
 
   /* For whoever opens the console. */
   console.log(
-    "%c  ▄███▄\n  █████\n▀▀▀▀▀▀▀▀▀%c\nHey, you opened the console. Respect.\nThis site is plain HTML, CSS and a pinch of JS, built by tools/build.py.\nTry typing  noclip  on the page.",
+    "%c  ▄███▄\n  █████\n▀▀▀▀▀▀▀▀▀%c\nPlain HTML, CSS and a little JS. Built by tools/build.py.\nType  noclip  on the page.",
     "color:#00ff00;font-weight:bold", "color:#ff00ff"
   );
 })();
