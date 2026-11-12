@@ -1488,6 +1488,52 @@ span.path {
   margin: 0 0 14px;
 }
 
+/* The cabinet: one row per office, the president's in gold. */
+.cabinet {
+  max-width: 30em;
+  margin: 22px 0 6px;
+  border-top: 1px solid rgb(0 255 0 / 0.3);
+}
+
+.cabinet__seat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgb(0 255 0 / 0.15);
+}
+
+.cabinet dt {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.cabinet dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-weight: 700;
+  text-align: right;
+}
+
+.cabinet__seat--president dt,
+.cabinet__seat--president dd {
+  color: var(--carpet);
+}
+
+.cabinet__seat--president dd {
+  text-shadow: 0 0 14px rgb(216 196 106 / 0.45);
+}
+
+.cabinet__term {
+  display: block;
+  font-family: system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--muted);
+  text-shadow: none;
+}
+
 .president {
   color: var(--muted);
 }

@@ -382,6 +382,11 @@ def yexico(data: dict, number: int) -> str:
     links = '<ul class="links">' + "".join(
         f'<li><a class="{"cta" if link.get("primary") else ""}" href="{esc(link["url"])}">{esc(link["text"])}</a></li>'
         for link in y["links"]) + "</ul>"
+    # The government of YEXICO: the president first, in gold, then his cabinet.
+    cabinet = ('<dl class="cabinet" aria-label="The YEXICO cabinet">' + "".join(
+        f'<div class="cabinet__seat{" cabinet__seat--president" if i == 0 else ""}"><dt>{esc(office)}</dt>'
+        f'<dd>{esc(name)}{"<span class=\"cabinet__term\">2023 to now</span>" if i == 0 else ""}</dd></div>'
+        for i, (office, name) in enumerate(y.get("cabinet", []))) + "</dl>") if y.get("cabinet") else ""
     photo = y["photo"]
     # The flag is cut into vertical strips; each rises and falls a beat after the last, so it ripples.
     strips = "".join(f'<span style="--i:{i}"></span>' for i in range(48))
@@ -402,7 +407,7 @@ def yexico(data: dict, number: int) -> str:
             f'<div class="flag" role="img" aria-label="The YEXICO flag: green, white and green, with a smile in the middle">'
             f'{strips}</div><span class="plinth" aria-hidden="true"></span></div>'
             f'<div class="yexico__text"><p class="motto">{esc(y["motto"]).replace(" :(", '&nbsp;<span class="nowrap">:(</span>')}</p>{text}'
-            f'<p class="president">President: <strong>{esc(data["owner"])}</strong>, 2023 to now</p>{links}</div></div>'
+            f'{cabinet}{links}</div></div>'
             f'<ul class="stats stats--yexico" aria-label="YEXICO in numbers">{stats}</ul>'
             f'<div class="media">{anthem}'
             f'<figure class="photo"><img src="{esc(photo["src"])}" alt="{esc(photo["alt"])}" width="{photo["width"]}" '

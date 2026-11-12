@@ -646,7 +646,25 @@
     "anthem": {
       "id": "idwSJ5drg5U",
       "title": "YEXICO Anthem (Lyric Video)"
-    }
+    },
+    "cabinet": [
+      [
+        "President",
+        "RoYoshi"
+      ],
+      [
+        "Vice President",
+        "Frost"
+      ],
+      [
+        "Secretary of State",
+        "Original"
+      ],
+      [
+        "Secretary of the Treasury",
+        "Goku"
+      ]
+    ]
   },
   "favourites": {
     "title": "Favourites",
