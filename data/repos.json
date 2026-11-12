@@ -8,7 +8,8 @@
       "Game and level designer",
       "Graphic designer",
       "Video editor",
-      "Linux system builder"
+      "Linux system builder",
+      "President of YEXICO"
     ],
     "paragraphs": [
       "RoYoshi makes whole things, from the code to the logo: a Linux desktop with a look of its own and the apps built into it, and a multiplayer horror game with its own website.",
@@ -22,6 +23,7 @@
     "lines": [
       "./build --everything",
       "building an operating system",
+      "presiding over YEXICO",
       "drawing his own icons",
       "teaching the Hound to hunt",
       "playing Team Fortress 2",
@@ -33,6 +35,10 @@
     ]
   },
   "neofetch": [
+    [
+      "Title",
+      "President of YEXICO"
+    ],
     [
       "OS",
       "FE-XicoOS (Fedora 45)"

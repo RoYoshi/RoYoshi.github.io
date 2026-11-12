@@ -576,6 +576,17 @@ span.path {
   color: var(--green);
 }
 
+/* The presidency gets the carpet's gold. */
+.roles li:last-child {
+  border-color: var(--carpet);
+  color: var(--carpet);
+  font-weight: 600;
+}
+
+.roles li:last-child:hover {
+  box-shadow: 0 0 18px rgb(216 196 106 / 0.4);
+}
+
 .about {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
