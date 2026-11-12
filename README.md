@@ -1,7 +1,8 @@
 # RoYoshi.github.io
 
-RoYoshi's site on GitHub Pages: one page with his projects (every repository on
-this account, public and private), his IT certifications and his YouTube channel.
+RoYoshi's site on GitHub Pages: one page about him, his projects (every repository
+on this account, public and private), the skills behind them, his IT certifications
+and his YouTube channel.
 Private repositories are described here, but their source stays private.
 
 ## Files
@@ -9,11 +10,13 @@ Private repositories are described here, but their source stays private.
 | Path | What it is |
 |---|---|
 | `index.html` | The page. Built by `tools/build.py`; don't edit it by hand |
-| `data/repos.json` | The content: each repository's description, what's inside and its facts; the certifications; the YouTube channel; the links at the top (a link whose `url` is `null`, such as Steam or Credly until they're filled in, is left off the page) |
+| `data/repos.json` | The content: the About section (roles and paragraphs); the skills, each with links to where they show on the page; each repository's description, what's inside and its facts; the certifications; the YouTube channel; the links at the top (a link whose `url` is `null`, such as Steam or Credly until they're filled in, is left off the page) |
 | `assets/style.css` | The look: FE-Xico Aurora colours, the family tree, the narrow-screen layout |
 | `assets/icons/`, `assets/carpet.jpg` | The apps' own icons and the Level 0 carpet. The Far Backrooms' icon loads from thefarbackrooms.com, with the carpet behind it |
 | `assets/favicon.png`, `assets/apple-touch-icon.png`, `assets/og.png` | The tab icon, the home-screen icon and the picture shown when the page is shared; all drawn by `tools/build.py` |
-| `tools/build.py` | Writes `index.html` and the drawn images from the data |
+| `404.html` | The page GitHub Pages shows for an address that isn't on the site. Built by `tools/build.py` |
+| `robots.txt`, `sitemap.xml` | Point search engines at the page |
+| `tools/build.py` | Writes `index.html`, `404.html` and the drawn images from the data |
 | `.nojekyll` | Tells GitHub Pages to publish the files as they are |
 
 ## Changing the page

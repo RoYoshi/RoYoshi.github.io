@@ -27,6 +27,7 @@
 
 html {
   background: var(--black);
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   /* The full-width rule and the carpet reach the window's edges, never past them. */
   overflow-x: clip;
@@ -173,7 +174,7 @@ main,
   text-decoration-color: currentColor;
 }
 
-.group {
+[id] {
   scroll-margin-top: 24px;
 }
 
@@ -199,12 +200,26 @@ main::before {
   margin-top: 112px;
 }
 
+/* A section heading: its number in magenta pixels, then the title. */
 .group h2 {
-  margin: 0 0 8px;
-  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 12px;
+  font-size: 1.625rem;
   font-weight: 600;
-  line-height: 1.3;
-  color: var(--muted);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.h2__index {
+  flex: none;
+  color: var(--magenta);
+}
+
+.pixel--index {
+  --px: 3px;
 }
 
 .group .note {
@@ -273,7 +288,7 @@ span.path {
 }
 
 .repo p.where {
-  margin-bottom: 20px;
+  margin: 16px 0 20px;
 }
 
 .inside {
@@ -387,7 +402,8 @@ span.path {
 }
 
 /* The game: the carpet of Level 0, the one colour that is not Aurora's. */
-.group--game h2 {
+.group--game h2,
+.group--game .h2__index {
   color: var(--carpet);
 }
 
@@ -464,6 +480,79 @@ span.path {
 
 .group--game :focus-visible {
   outline-color: var(--carpet);
+}
+
+/* About ------------------------------------------------------------------------ */
+
+.roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: 28px 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.roles li {
+  padding: 4px 12px;
+  border: 1px solid var(--magenta);
+  font-size: 0.9375rem;
+}
+
+.roles li:first-child {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.about__text {
+  max-width: var(--measure);
+}
+
+.about__text p {
+  margin: 0 0 16px;
+}
+
+.about__text p:first-child {
+  font-size: 1.1875rem;
+  line-height: 1.5;
+}
+
+/* Skills: an area, its tools, and where on the page it shows. */
+.skills {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill {
+  display: grid;
+  grid-template-columns: 220px minmax(0, var(--measure));
+  column-gap: var(--gutter);
+  padding: 16px 0;
+  border-top: 1px solid rgb(255 0 255 / 0.25);
+}
+
+.skill__name {
+  font-weight: 600;
+}
+
+.skill__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill__seen {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* Arriving from a link lights up what it points at. */
+:target > .repo__body .repo__name,
+.cert:target .cert__label {
+  color: var(--green);
 }
 
 /* Certifications ------------------------------------------------------------- */
@@ -574,6 +663,11 @@ span.path {
   font-size: 0.875rem;
 }
 
+.elsewhere--footer {
+  margin: 0 0 20px;
+  font-size: 0.9375rem;
+}
+
 .colophon p {
   max-width: var(--measure);
   margin: 0 0 6px;
@@ -635,13 +729,24 @@ span.path {
     top: calc(var(--mark) + 8px);
   }
 
+  /* Terms beside their values, as on wide screens, just narrower. */
   .facts {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+    grid-template-columns: 6.75em minmax(0, 1fr);
+    gap: 6px 12px;
   }
 
-  .facts dd + dt {
-    margin-top: 10px;
+  .group h2 {
+    gap: 12px;
+    font-size: 1.375rem;
+  }
+
+  .pixel--index {
+    --px: 2px;
+  }
+
+  .skill {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
   }
 
   .cert {
@@ -660,9 +765,30 @@ span.path {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .cert__label {
     transition: none;
   }
+}
+
+/* The 404 page ------------------------------------------------------------------ */
+
+.lost {
+  width: min(100% - 48px, 960px);
+  margin-inline: auto;
+  padding-block: 120px;
+}
+
+.lost h1 {
+  margin: 0 0 40px;
+  line-height: 0;
+}
+
+.lost::before {
+  display: none;
 }
 
 @media (max-width: 360px) {
