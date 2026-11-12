@@ -15,6 +15,8 @@
   --gutter: 28px;   /* icon to text */
   --branch: 32px;   /* family tree: line to a child's icon */
   --measure: 66ch;
+  --hpx: 9px;       /* one pixel of the name at the top */
+  --mono: ui-monospace, "JetBrains Mono", "Fira Code", "Cascadia Code", "DejaVu Sans Mono", monospace;
 
   color-scheme: dark;
 }
@@ -36,7 +38,12 @@ html {
 body {
   margin: 0;
   color: var(--text);
-  background: var(--black);
+  /* OLED black, with a little neon spilling in at the top. */
+  background:
+    radial-gradient(55% 60% at 88% 0%, rgb(0 255 0 / 0.08), transparent 70%),
+    radial-gradient(45% 50% at 0% 30%, rgb(255 0 255 / 0.07), transparent 70%)
+    0 0 / 100% 900px no-repeat,
+    var(--black);
   /* The reader's own desktop font: on FE-XicoOS, whatever Plasma is set to. */
   font-family: system-ui, "Noto Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.0625rem;
@@ -96,7 +103,7 @@ a:hover {
 }
 
 .pixel--hero {
-  --px: 9px;
+  --px: var(--hpx);
 }
 
 .pixel .dot {
@@ -125,8 +132,73 @@ main,
 }
 
 .masthead h1 {
-  margin: 0 0 40px;
+  position: relative;
+  width: fit-content;
+  margin: 0 0 28px;
   line-height: 0;
+}
+
+/* RoYoshi's mark, the FE-Xico hat, worn on the R of his name. */
+.hat {
+  position: absolute;
+  left: calc(var(--hpx) * -1.4);
+  top: calc(var(--hpx) * -6.2);
+  width: calc(var(--hpx) * 9.6);
+  height: auto;
+  transform: rotate(-12deg);
+  transform-origin: 50% 85%;
+  filter: drop-shadow(0 0 calc(var(--hpx) * 1.4) rgb(0 255 0 / 0.35));
+  transition: transform 260ms cubic-bezier(0.3, 1.6, 0.5, 1);
+  cursor: pointer;
+}
+
+.hat:hover {
+  transform: rotate(-20deg) translateY(calc(var(--hpx) * -0.8));
+}
+
+.hat.tip {
+  animation: tip 900ms cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+@keyframes tip {
+  0% { transform: rotate(-12deg); }
+  35% { transform: rotate(-34deg) translate(calc(var(--hpx) * -1), calc(var(--hpx) * -2.4)); }
+  70% { transform: rotate(-6deg) translateY(calc(var(--hpx) * 0.2)); }
+  100% { transform: rotate(-12deg); }
+}
+
+/* A shell prompt on his own machine, typing what he's up to. */
+.prompt {
+  margin: 0 0 28px;
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.p-user {
+  color: var(--green);
+}
+
+.p-host {
+  color: var(--green);
+}
+
+.p-path {
+  color: var(--magenta);
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 2px;
+  background: var(--green);
+  vertical-align: -0.2em;
+  animation: blink 1.05s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }
 
 .intro {
@@ -504,8 +576,122 @@ span.path {
   color: var(--green);
 }
 
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
+  gap: 48px;
+  align-items: start;
+}
+
 .about__text {
   max-width: var(--measure);
+}
+
+/* A neofetch in a Foot window: the hat, then the facts. */
+.fetch {
+  margin: 0;
+  border: 1px solid rgb(255 0 255 / 0.55);
+  background: #050505;
+  box-shadow: 0 0 0 1px rgb(0 0 0), 0 18px 60px rgb(255 0 255 / 0.12);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.fetch__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-bottom: 1px solid rgb(255 0 255 / 0.3);
+  color: var(--muted);
+}
+
+.fetch__bar span:not(.fetch__title) {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--muted);
+}
+
+.fetch__bar span:first-child {
+  border-color: var(--magenta);
+  background: rgb(255 0 255 / 0.4);
+}
+
+.fetch__bar span:nth-child(2) {
+  border-color: var(--green);
+}
+
+.fetch__title {
+  margin-left: auto;
+  font-size: 0.75rem;
+}
+
+.fetch__body {
+  padding: 14px 16px 16px;
+}
+
+.fetch p {
+  margin: 0;
+}
+
+.fetch__cmd {
+  margin-bottom: 12px !important;
+}
+
+.fetch__out {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.fetch__hat {
+  width: 76px;
+  height: auto;
+  margin-top: 6px;
+  filter: drop-shadow(0 0 10px rgb(0 255 0 / 0.3));
+}
+
+.fetch__rule {
+  color: var(--muted);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.fetch dl {
+  margin: 2px 0 10px;
+}
+
+.fetch dl div {
+  display: flex;
+  gap: 0.5em;
+}
+
+.fetch dt {
+  flex: none;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.fetch dt::after {
+  content: ":";
+}
+
+.fetch dd {
+  margin: 0;
+  min-width: 0;
+}
+
+.fetch__swatches {
+  display: flex;
+}
+
+.fetch__swatches span {
+  width: 18px;
+  height: 12px;
+  background: var(--colour);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
 }
 
 .about__text p {
@@ -553,6 +739,195 @@ span.path {
 :target > .repo__body .repo__name,
 .cert:target .cert__label {
   color: var(--green);
+}
+
+/* Things that answer the pointer ---------------------------------------------- */
+
+.repo__mark img {
+  transition: transform 260ms cubic-bezier(0.3, 1.5, 0.5, 1), filter 260ms ease-out;
+}
+
+.repo:hover > .repo__mark img {
+  transform: translateY(-4px) rotate(-4deg) scale(1.04);
+  filter: drop-shadow(0 8px 20px rgb(0 255 0 / 0.3));
+}
+
+.cta {
+  transition: background-color 140ms ease-out, color 140ms ease-out, box-shadow 200ms ease-out;
+}
+
+.cta:hover {
+  box-shadow: 0 0 28px rgb(0 255 0 / 0.35);
+}
+
+.group--game .cta:hover {
+  box-shadow: 0 0 28px rgb(216 196 106 / 0.4);
+}
+
+.skill .part {
+  transition: border-color 140ms ease-out, color 140ms ease-out;
+}
+
+.skill:hover .part {
+  border-color: rgb(0 255 0 / 0.6);
+  color: var(--text);
+}
+
+.roles li {
+  transition: box-shadow 200ms ease-out;
+}
+
+.roles li:hover {
+  box-shadow: 0 0 18px rgb(255 0 255 / 0.35);
+}
+
+.roles li:first-child:hover {
+  box-shadow: 0 0 18px rgb(0 255 0 / 0.35);
+}
+
+/* With the script on, the parts rise in as they come into view. */
+.js .rise {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 700ms ease-out, transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.js .rise.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Level 0's lights flicker now and then. */
+.group--game::before {
+  animation: fluorescent 9s linear infinite;
+}
+
+@keyframes fluorescent {
+  0%, 88%, 91%, 94%, 100% { opacity: 1; }
+  89% { opacity: 0.55; }
+  90% { opacity: 0.9; }
+  92.5% { opacity: 0.4; }
+}
+
+/* Something smiles in the dark under the game. Look straight at it and it's gone. */
+.group--game {
+  position: relative;
+}
+
+.smiler {
+  position: absolute;
+  right: 0;
+  bottom: -96px;
+  width: 150px;
+  opacity: 0.14;
+  transition: opacity 400ms ease-out;
+}
+
+.smiler svg {
+  display: block;
+  width: 100%;
+  fill: #FFFFF0;
+  filter: drop-shadow(0 0 6px rgb(255 255 240 / 0.8));
+}
+
+.smiler .teeth {
+  fill: none;
+  stroke: var(--black);
+  stroke-width: 1.6;
+}
+
+.smiler ellipse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: smiler-blink 6.5s infinite;
+}
+
+@keyframes smiler-blink {
+  0%, 95%, 100% { transform: none; }
+  97% { transform: scaleY(0.1); }
+}
+
+.smiler:hover {
+  opacity: 0;
+}
+
+/* noclip: the page falls into Level 0 (assets/site.js). */
+.noclipped .masthead,
+.noclipped main,
+.noclipped .colophon {
+  filter: sepia(1) saturate(2.4) hue-rotate(8deg) brightness(0.85) blur(1px);
+  transition: filter 600ms ease-out;
+}
+
+.level0 {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    linear-gradient(rgb(216 196 106 / 0.18), rgb(0 0 0 / 0.55)),
+    url("carpet.jpg") 0 0 / 256px 256px;
+  background-blend-mode: normal, multiply;
+  animation: fluorescent 4s linear infinite;
+}
+
+.level0__card {
+  max-width: 30em;
+  padding: 28px 32px;
+  border: 1px solid var(--carpet);
+  background: rgb(0 0 0 / 0.88);
+  box-shadow: 0 0 80px rgb(216 196 106 / 0.35);
+}
+
+.level0__card p {
+  margin: 0 0 14px;
+}
+
+.level0__title {
+  color: var(--carpet);
+  font-size: 1.375rem;
+  font-weight: 600;
+}
+
+.level0__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin: 22px 0 0 !important;
+}
+
+.level0 .cta {
+  color: var(--carpet);
+}
+
+.level0 :focus-visible {
+  outline-color: var(--carpet);
+}
+
+.level0 .cta:hover {
+  color: var(--black);
+  background: var(--carpet);
+}
+
+.level0__close {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.hint kbd {
+  padding: 0 5px;
+  border: 1px solid rgb(232 239 235 / 0.3);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
 }
 
 /* Certifications ------------------------------------------------------------- */
@@ -692,8 +1067,22 @@ span.path {
     padding-block: 56px 40px;
   }
 
-  .pixel--hero {
-    --px: 5px;
+  :root {
+    --hpx: 5px;
+  }
+
+  .about {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .prompt {
+    font-size: 0.875rem;
+  }
+
+  .smiler {
+    width: 110px;
+    bottom: -80px;
   }
 
   .pixel--name {
@@ -769,6 +1158,19 @@ span.path {
     scroll-behavior: auto;
   }
 
+  .cursor,
+  .group--game::before,
+  .smiler ellipse,
+  .level0,
+  .hat.tip {
+    animation: none;
+  }
+
+  .hat,
+  .repo__mark img {
+    transition: none;
+  }
+
   .cert__label {
     transition: none;
   }
@@ -792,8 +1194,8 @@ span.path {
 }
 
 @media (max-width: 360px) {
-  .pixel--hero {
-    --px: 4px;
+  :root {
+    --hpx: 4px;
   }
 }
 

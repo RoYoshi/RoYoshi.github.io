@@ -219,6 +219,13 @@ def article(repo: dict, root: bool = False) -> str:
             f'<p class="where">{where}</p>{paragraphs}{credits}{links}{inside}{facts(repo)}</div></article>')
 
 
+SMILER = ('<div class="smiler" aria-hidden="true"><svg viewBox="0 0 120 60">'
+          '<ellipse cx="38" cy="16" rx="7" ry="4.5"/><ellipse cx="82" cy="16" rx="7" ry="4.5"/>'
+          '<path d="M14 30 Q60 70 106 30 Q60 52 14 30Z"/>'
+          '<path class="teeth" d="M24 35v6M33 39v7M42 42v7M51 44v7M60 44v8M69 44v7M78 42v7M87 39v7M96 35v6"/>'
+          '</svg></div>')
+
+
 def group(data: dict, number: int) -> str:
     key = f'g-{data["id"]}'
     note = f'<p class="note">{esc(data["note"])}</p>' if data.get("note") else ""
@@ -230,7 +237,7 @@ def group(data: dict, number: int) -> str:
         body += '<ul class="tree">' + "".join(f"<li>{article(r)}</li>" for r in children) + "</ul>"
     body += "".join(article(r) for r in singles)
     return (f'<section class="group group--{esc(data["id"])}" aria-labelledby="{key}">'
-            f'{heading(key, number, data["title"])}{note}{body}</section>')
+            f'{heading(key, number, data["title"])}{note}{body}{SMILER if data["id"] == "game" else ""}</section>')
 
 
 def certifications(data: dict, number: int) -> str:
@@ -273,9 +280,24 @@ def about(data: dict, number: int) -> str:
     a = data["about"]
     roles = "".join(f"<li>{esc(role)}</li>" for role in a["roles"])
     text = "".join(f"<p>{esc(p)}</p>" for p in a["paragraphs"])
+    t = data["terminal"]
+    title = f'{t["user"]}@{t["host"]}'
+    rows = "".join(f'<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in data["neofetch"])
+    swatches = "".join(f'<span style="--colour:{c}"></span>'
+                       for c in ("#000000", "#FF00FF", "#00FF00", "#D8C46A", "#8D9C98", "#E8EFEB"))
+    # A neofetch, as on the FE-XicoOS desktop: the mark, then the facts.
+    fetch = (f'<figure class="fetch" aria-label="RoYoshi at a glance">'
+             f'<div class="fetch__bar" aria-hidden="true"><span></span><span></span><span></span>'
+             f'<span class="fetch__title">Foot: ~</span></div>'
+             f'<div class="fetch__body"><p class="fetch__cmd" aria-hidden="true">'
+             f'<span class="p-user">{esc(title)}</span>:<span class="p-path">~</span>$ neofetch</p>'
+             f'<div class="fetch__out"><img class="fetch__hat" src="assets/icons/fe-xicoos.png" alt="" width="96" height="96">'
+             f'<div><p class="fetch__who"><span class="p-user">{esc(t["user"])}</span>@<span class="p-host">{esc(t["host"])}</span></p>'
+             f'<p class="fetch__rule" aria-hidden="true">{"-" * len(title)}</p>'
+             f'<dl>{rows}</dl><p class="fetch__swatches" aria-hidden="true">{swatches}</p></div></div></div></figure>')
     return (f'<section class="group group--about" id="about" aria-labelledby="g-about">'
             f'{heading("g-about", number, "About")}<ul class="roles" aria-label="Roles">{roles}</ul>'
-            f'<div class="about__text">{text}</div></section>')
+            f'<div class="about"><div class="about__text">{text}</div>{fetch}</div></section>')
 
 
 def skills(data: dict, number: int) -> str:
@@ -318,6 +340,11 @@ def page(data: dict) -> str:
     total_certs = sum(len(g["certs"]) for g in data["certifications"]["groups"]) + len(data["certifications"]["stackables"])
     jumps = [("#about", "About"), ("#g-fe-xico", "FE-XicoOS"), ("#g-game", "The Far Backrooms"),
              ("#skills", "Skills"), ("#certifications", "Certifications"), ("#youtube", "On YouTube")]
+    t = data["terminal"]
+    # A shell prompt on RoYoshi's own machine; the script types the lines in turn.
+    prompt = (f'<p class="prompt"><span class="p-user">{esc(t["user"])}@{esc(t["host"])}</span>:<span class="p-path">~</span>$ '
+              f'<span class="prompt__cmd" data-lines="{esc(json.dumps(t["lines"]))}">{esc(t["lines"][0])}</span>'
+              f'<span class="cursor" aria-hidden="true"></span></p>')
     nav = "".join(f'<li><a href="{href}">{esc(text)}</a></li>' for href, text in jumps)
     return f"""<!doctype html>
 <html lang="en">
@@ -344,11 +371,13 @@ def page(data: dict) -> str:
 <meta name="author" content="{esc(data["owner"])}">
 <link rel="stylesheet" href="assets/style.css">
 <script type="application/ld+json">{person(data)}</script>
+<script src="assets/site.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to the content</a>
 <header class="masthead" id="top">
-<h1><span class="visually-hidden">{esc(data["owner"])}</span>{pixel_svg(data["owner"], "pixel--hero", glow_dot=True)}</h1>
+<h1 class="hero"><span class="visually-hidden">{esc(data["owner"])}</span><img class="hat" src="assets/icons/fe-xicoos.png" alt="" width="192" height="192">{pixel_svg(data["owner"], "pixel--hero", glow_dot=True)}</h1>
+{prompt}
 <p class="intro">{esc(data["intro"])}</p>
 <ul class="elsewhere">{elsewhere}</ul>
 <p class="profile">{count} repositories ({private} of them private) and {total_certs} certifications.</p>
@@ -361,7 +390,7 @@ def page(data: dict) -> str:
 <ul class="elsewhere elsewhere--footer">{elsewhere}<li><a href="#top">Back to the top</a></li></ul>
 <p>Facts as of {esc(date(data["as_of"]))}. Private repositories are described here, but their source stays private.</p>
 <p>Headings are drawn from GNU Unifont glyphs. The colours are FE-Xico Aurora's, and the icons are the apps' own.</p>
-<p>&copy; {esc(data["as_of"][:4])} {esc(data["owner"])}</p>
+<p>&copy; {esc(data["as_of"][:4])} {esc(data["owner"])}. <span class="hint">Psst: type <kbd>noclip</kbd>.</span></p>
 </footer>
 </body>
 </html>

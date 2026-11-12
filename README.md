@@ -10,8 +10,9 @@ Private repositories are described here, but their source stays private.
 | Path | What it is |
 |---|---|
 | `index.html` | The page. Built by `tools/build.py`; don't edit it by hand |
-| `data/repos.json` | The content: the About section (roles and paragraphs); the skills, each with links to where they show on the page; each repository's description, what's inside and its facts; the certifications; the YouTube channel; the links at the top (a link whose `url` is `null`, such as Steam or Credly until they're filled in, is left off the page) |
-| `assets/style.css` | The look: FE-Xico Aurora colours, the family tree, the narrow-screen layout |
+| `data/repos.json` | The content: the About section (roles and paragraphs); the prompt's lines (`terminal`) and the neofetch facts (`neofetch`); the skills, each with links to where they show on the page; each repository's description, what's inside and its facts; the certifications; the YouTube channel; the links at the top (a link whose `url` is `null`, such as Steam or Credly until they're filled in, is left off the page) |
+| `assets/style.css` | The look: FE-Xico Aurora colours, the family tree, the narrow-screen layout, the hat on the name, the neofetch card, the Smiler |
+| `assets/site.js` | The small things that move: the prompt typing under the name, sections rising into view, tipping the hat, and the `noclip` easter egg. The page reads the same without it |
 | `assets/icons/`, `assets/carpet.jpg` | The apps' own icons and the Level 0 carpet. The Far Backrooms' icon loads from thefarbackrooms.com, with the carpet behind it |
 | `assets/favicon.png`, `assets/apple-touch-icon.png`, `assets/og.png` | The tab icon, the home-screen icon and the picture shown when the page is shared; all drawn by `tools/build.py` |
 | `404.html` | The page GitHub Pages shows for an address that isn't on the site. Built by `tools/build.py` |

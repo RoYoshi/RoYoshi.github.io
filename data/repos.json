@@ -1,6 +1,6 @@
 {
   "owner": "RoYoshi",
-  "as_of": "2026-11-11",
+  "as_of": "2026-11-12",
   "intro": "An operating system and the apps built into it, a horror game, eleven IT certifications and a YouTube channel: what RoYoshi builds, designs and knows.",
   "about": {
     "roles": [
@@ -15,6 +15,49 @@
       "Behind the projects are eleven IT certifications from CompTIA and Cisco, covering support, networking, Linux and security."
     ]
   },
+  "terminal": {
+    "user": "royoshi",
+    "host": "FE-ROYO",
+    "lines": [
+      "./build --everything",
+      "building an operating system",
+      "drawing his own icons",
+      "teaching the Hound to hunt",
+      "collecting certifications",
+      "editing the next jumpscare",
+      "noclipping into Level 0"
+    ]
+  },
+  "neofetch": [
+    [
+      "OS",
+      "FE-XicoOS (Fedora 45)"
+    ],
+    [
+      "DE",
+      "KDE Plasma 6"
+    ],
+    [
+      "Theme",
+      "FE-Xico Aurora"
+    ],
+    [
+      "Mark",
+      "the green top hat"
+    ],
+    [
+      "Game",
+      "The Far Backrooms"
+    ],
+    [
+      "Certs",
+      "11 (CompTIA, Cisco)"
+    ],
+    [
+      "Channel",
+      "@Ro_Yoshi"
+    ]
+  ],
   "groups": [
     {
       "id": "fe-xico",
@@ -64,30 +107,18 @@
           "icon": "assets/icons/fe-xico-updater.png",
           "role": "child",
           "summary": [
-            "The update app of FE-XicoOS. It shows whether the system is up to date, gets a new system image ready, and explains restarting and rolling back in plain words. It never restarts the computer by itself, and it works with a keyboard, mouse, touch screen or game controller.",
-            "It began as a fork of Bazzite Updater by Robert French and contributors, and is now a project of its own that still reviews and takes in improvements from it."
+            "The update app of FE-XicoOS, being written from scratch in C++ and Qt Quick. It checks for, downloads and rolls back FE-XicoOS updates, and shows the release notes, the update history and the technical details, in words anyone can follow.",
+            "It replaces the earlier updater based on Bazzite Updater by Robert French and contributors, which is kept as FE-Xico-UpdateR-olddy."
           ],
           "inside": [],
           "facts": {
-            "created": "2026-09-24",
-            "pushed": "2026-11-11",
-            "commits": 205,
-            "commits_note": "including Bazzite Updater's history",
-            "pulls": 12,
-            "licence": "GPL-2.0-or-later",
+            "created": "2026-11-12",
+            "pushed": "2026-11-12",
+            "commits": 1,
+            "pulls": 1,
+            "licence": "Apache-2.0",
             "release": null,
-            "languages": {
-              "QML": 123697,
-              "C++": 122447,
-              "Python": 31113,
-              "CMake": 11414,
-              "JavaScript": 3179,
-              "Just": 1847,
-              "Shell": 1085,
-              "C": 822,
-              "HCL": 140,
-              "Rhai": 44
-            }
+            "languages": null
           }
         },
         {
