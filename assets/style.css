@@ -1529,6 +1529,33 @@ span.path {
   color: var(--muted);
 }
 
+/* The offices, grand: engraved gold capitals standing out from the page, built
+   from a stack of darker golds under a bright face. */
+.cabinet {
+  max-width: 38em;
+}
+
+.cabinet dt {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFE98A;
+  text-shadow:
+    0 1px 0 #D8B84A,
+    0 2px 0 #B8962F,
+    0 3px 0 #94751E,
+    0 4px 0 #6E5612,
+    0 5px 0 #4A3A0B,
+    0 7px 10px rgb(0 0 0 / 0.9),
+    0 0 26px rgb(232 200 96 / 0.35);
+}
+
+.cabinet__seat {
+  padding: 16px 0 18px;
+}
+
 /* A nameplate plated in gold: a gold bevelled frame, and the name in its own
    colour with a gold edge. */
 .plate {
@@ -1910,6 +1937,20 @@ span.path {
 
   .media {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cabinet__seat {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .cabinet dt {
+    font-size: 1rem;
+  }
+
+  .cabinet dd {
+    text-align: left;
   }
 
   .stats--yexico {
