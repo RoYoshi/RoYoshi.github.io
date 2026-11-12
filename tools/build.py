@@ -382,11 +382,12 @@ def yexico(data: dict, number: int) -> str:
     links = '<ul class="links">' + "".join(
         f'<li><a class="{"cta" if link.get("primary") else ""}" href="{esc(link["url"])}">{esc(link["text"])}</a></li>'
         for link in y["links"]) + "</ul>"
-    # The government of YEXICO: the president first, in gold, then his cabinet.
+    # The government of YEXICO: each name on a gold-plated nameplate in its own colour.
     cabinet = ('<dl class="cabinet" aria-label="The YEXICO cabinet">' + "".join(
-        f'<div class="cabinet__seat{" cabinet__seat--president" if i == 0 else ""}"><dt>{esc(office)}</dt>'
-        f'<dd>{esc(name)}{"<span class=\"cabinet__term\">2023 to now</span>" if i == 0 else ""}</dd></div>'
-        for i, (office, name) in enumerate(y.get("cabinet", []))) + "</dl>") if y.get("cabinet") else ""
+        f'<div class="cabinet__seat"><dt>{esc(seat["office"])}</dt>'
+        f'<dd><span class="plate plate--{esc(seat["plate"])}">{esc(seat["name"])}</span>'
+        f'<span class="cabinet__term">{esc(seat["term"])}</span></dd></div>'
+        for seat in y.get("cabinet", [])) + "</dl>") if y.get("cabinet") else ""
     photo = y["photo"]
     # The flag is cut into vertical strips; each rises and falls a beat after the last, so it ripples.
     strips = "".join(f'<span style="--i:{i}"></span>' for i in range(48))

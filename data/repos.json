@@ -645,22 +645,30 @@
       "title": "YEXICO Anthem (Lyric Video)"
     },
     "cabinet": [
-      [
-        "President",
-        "RoYoshi"
-      ],
-      [
-        "Vice President",
-        "Frost"
-      ],
-      [
-        "Secretary of State",
-        "Original"
-      ],
-      [
-        "Secretary of the Treasury",
-        "Goku"
-      ]
+      {
+        "office": "President",
+        "name": "RoYoshi",
+        "term": "2023 to now",
+        "plate": "green"
+      },
+      {
+        "office": "Vice President",
+        "name": "Frost",
+        "term": "2023 to now",
+        "plate": "cyan"
+      },
+      {
+        "office": "Secretary of State",
+        "name": "Original",
+        "term": "2023 to now",
+        "plate": "obsidian"
+      },
+      {
+        "office": "Secretary of the Treasury",
+        "name": "Goku",
+        "term": "2024 to now",
+        "plate": "gold"
+      }
     ]
   },
   "favourites": {

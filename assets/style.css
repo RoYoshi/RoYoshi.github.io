@@ -1516,22 +1516,57 @@ span.path {
   text-align: right;
 }
 
-.cabinet__seat--president dt,
-.cabinet__seat--president dd {
-  color: var(--carpet);
-}
-
-.cabinet__seat--president dd {
-  text-shadow: 0 0 14px rgb(216 196 106 / 0.45);
+.cabinet__seat {
+  align-items: center;
 }
 
 .cabinet__term {
   display: block;
+  margin-top: 4px;
   font-family: system-ui, sans-serif;
   font-size: 0.8125rem;
   font-weight: 400;
   color: var(--muted);
-  text-shadow: none;
+}
+
+/* A nameplate plated in gold: a gold bevelled frame, and the name in its own
+   colour with a gold edge. */
+.plate {
+  --name: var(--text);
+  --gold: #E8C860;
+  display: inline-block;
+  padding: 3px 14px 4px;
+  border: 2px solid;
+  border-image: linear-gradient(135deg, #FFF3B0, #D8B84A 30%, #7A6117 55%, #F3DC84 80%, #A8872A) 1;
+  background: linear-gradient(180deg, rgb(255 243 176 / 0.1), rgb(0 0 0 / 0) 45%), #0A0903;
+  box-shadow: 0 0 16px rgb(232 200 96 / 0.22), inset 0 0 0 1px rgb(0 0 0 / 0.8);
+  font-size: 1.125rem;
+  letter-spacing: 0.04em;
+  color: var(--name);
+  -webkit-text-stroke: 1.8px var(--gold);
+  paint-order: stroke fill;
+}
+
+.plate--green {
+  --name: #00FF00;
+  text-shadow: 0 0 14px rgb(0 255 0 / 0.6);
+}
+
+.plate--cyan {
+  --name: #00F0FF;
+  text-shadow: 0 0 14px rgb(0 240 255 / 0.6);
+}
+
+/* Obsidian: black glass, readable by its gold edge. */
+.plate--obsidian {
+  --name: #0B0B10;
+  --gold: #F3DC84;
+}
+
+.plate--gold {
+  --name: #FFD84A;
+  --gold: #8A6A12;
+  text-shadow: 0 0 14px rgb(255 216 74 / 0.55);
 }
 
 .president {
