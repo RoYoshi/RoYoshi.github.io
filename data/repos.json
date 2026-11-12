@@ -182,8 +182,8 @@
           "icon": "https://thefarbackrooms.com/assets/branding/icon-512.png",
           "role": "single",
           "summary": [
-            "A browser-first multiplayer survival-horror game, and a love letter to internet horror as a whole, with The Backrooms as its poster child. You wander the yellow rooms of Level 0 while the Hound and the Smiler hunt you, and everyone in a session meets the same monsters.",
-            "The browser draws the level with PixiJS, and a Node.js server runs the monsters and connects the players. It is in active development, built in stages; the current one, 2F, gives the monsters shared intelligence that works only from what they have actually seen."
+            "You are in Level 0. You are not alone.",
+            "A multiplayer horror game for the browser."
           ],
           "inside": [],
           "facts": {
@@ -218,42 +218,18 @@
               "url": "https://thefarbackrooms.com/credits.html"
             }
           ],
-          "rule": "The server may know the truth, but a monster may only act on what it has actually seen or heard.",
           "entities": [
             {
               "name": "The Hound",
-              "line": "Hunts in a pack. Since stage 2F, what one Hound has seen, the others can act on."
+              "line": ""
             },
             {
               "name": "The Smiler",
-              "line": "The canon Smiler, from the Backrooms wiki."
+              "line": ""
             }
           ],
-          "features": [
-            "Built for the browser, phones and low-end computers included",
-            "Everyone in a session meets the same monsters, run by one Node.js server",
-            "One server so far, in US Central, with more locations planned",
-            "Every candidate build is tested by a QA team before it ships"
-          ],
-          "status": "In active development: stage 2F",
-          "specs": [
-            [
-              "Level",
-              "0"
-            ],
-            [
-              "Entities",
-              "2"
-            ],
-            [
-              "Players",
-              "Multiplayer"
-            ],
-            [
-              "Runs in",
-              "The browser"
-            ]
-          ]
+          "status": "In development",
+          "hide_facts": true
         }
       ]
     },
@@ -713,5 +689,8 @@
       }
     ],
     "box": "* Reading this far fills you with DETERMINATION."
+  },
+  "people": {
+    "ₘₐᵣᵢᵢₖᵧᵤ": "https://soundcloud.com/mariikyu"
   }
 }

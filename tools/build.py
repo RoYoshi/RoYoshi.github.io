@@ -116,6 +116,17 @@ def esc(text: str) -> str:
     return html.escape(text, quote=True)
 
 
+PEOPLE: dict[str, str] = {}
+
+
+def named(text: str) -> str:
+    """Escaped text, with each person in data["people"] linked to their page."""
+    out = esc(text)
+    for name, url in PEOPLE.items():
+        out = out.replace(esc(name), f'<a class="person" href="{esc(url)}">{esc(name)}</a>')
+    return out
+
+
 def date(value: str) -> str:
     day = datetime.date.fromisoformat(value)
     return f"{day:%B} {day.day}, {day.year}"
@@ -201,11 +212,11 @@ def article(repo: dict, root: bool = False) -> str:
         where = f'Private repository <span class="path">{esc(repo["repo"])}</span>. Its source isn\'t public.'
     else:
         where = f'Public repository <a class="path" href="{esc(url)}">{esc(repo["repo"])}</a>'
-    paragraphs = "".join(f"<p>{esc(text)}</p>" for text in repo["summary"])
+    paragraphs = "".join(f"<p>{named(text)}</p>" for text in repo["summary"])
     inside = ""
     if repo.get("inside"):
         inside = '<ul class="inside">' + "".join(f"<li>{esc(item)}</li>" for item in repo["inside"]) + "</ul>"
-    credits = f'<p class="credits">{esc(repo["credits"])}</p>' if repo.get("credits") else ""
+    credits = f'<p class="credits">{named(repo["credits"])}</p>' if repo.get("credits") else ""
     # The game's extras: the rule its monsters live by, who hunts you, and how it's built.
     rule = ""
     if repo.get("rule"):
@@ -216,7 +227,7 @@ def article(repo: dict, root: bool = False) -> str:
         entities = ('<h4 class="sub">Who hunts you</h4><ul class="entities">' + "".join(
             f'<li class="entity entity--{slug(e["name"])}">{ENTITY_MARKS.get(slug(e["name"]), "")}<span class="entity__name">'
             f'<span class="visually-hidden">{esc(e["name"])}</span>{pixel_svg(e["name"], "pixel--cert")}</span>'
-            f'<span class="entity__line">{esc(e["line"])}</span></li>' for e in repo["entities"]) + "</ul>")
+            + (f'<span class="entity__line">{esc(e["line"])}</span>' if e.get("line") else "") + "</li>" for e in repo["entities"]) + "</ul>")
     status = ""
     if repo.get("status"):
         status = f'<p class="status"><span class="status__dot" aria-hidden="true"></span>{esc(repo["status"])}</p>'
@@ -238,7 +249,7 @@ def article(repo: dict, root: bool = False) -> str:
             f'<div class="repo__body">'
             f'<h3 class="repo__name" id="{key}-name"><span class="visually-hidden">{esc(repo["name"])}</span>'
             f'{pixel_svg(repo["name"], "pixel--name")}</h3>'
-            f'<p class="where">{where}</p>{status}{paragraphs}{specs}{rule}{entities}{features}{credits}{links}{inside}{facts(repo)}</div></article>')
+            f'<p class="where">{where}</p>{status}{paragraphs}{specs}{rule}{entities}{features}{credits}{links}{inside}{"" if repo.get("hide_facts") else facts(repo)}</div></article>')
 
 
 ENTITY_MARKS = {
@@ -314,7 +325,7 @@ def about(data: dict, number: int) -> str:
     links = a.get("role_links", {})
     roles = "".join(f'<li><a href="{esc(links[role])}">{esc(role)}</a></li>' if role in links else f"<li>{esc(role)}</li>"
                     for role in a["roles"])
-    text = "".join(f"<p>{esc(p)}</p>" for p in a["paragraphs"])
+    text = "".join(f"<p>{named(p)}</p>" for p in a["paragraphs"])
     t = data["terminal"]
     title = f'{t["user"]}@{t["host"]}'
     rows = "".join(f'<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in data["neofetch"])
@@ -612,6 +623,7 @@ def card(data: dict) -> None:
 
 def main() -> None:
     data = json.loads(DATA.read_text())
+    PEOPLE.update(data.get("people", {}))
     OUT.write_text(page(data))
     (ROOT / "404.html").write_text(not_found(data))
     favicon()

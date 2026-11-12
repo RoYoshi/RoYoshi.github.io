@@ -631,6 +631,17 @@ span.path {
   animation: fluorescent 6s linear infinite;
 }
 
+/* Short on purpose. */
+.group--game .repo__body > p:not(.where):not(.status):not(.credits) {
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: #FFF6D5;
+}
+
+.group--game .credits {
+  margin-top: 28px;
+}
+
 .group--game .repo__name {
   color: var(--carpet);
 }
