@@ -125,6 +125,12 @@ def slug(text: str) -> str:
     return "".join(c.lower() if c.isalnum() else "-" for c in text).strip("-")
 
 
+def heading(key: str, number: int, title: str) -> str:
+    """A section heading: its number drawn in magenta pixels, then its title."""
+    return (f'<h2 id="{key}"><span class="h2__index">{pixel_svg(f"{number:02d}", "pixel--index")}</span>'
+            f'<span class="h2__title">{esc(title)}</span></h2>')
+
+
 def languages(counts: dict[str, int]) -> str:
     total = sum(counts.values())
     ranked = sorted(counts.items(), key=lambda item: -item[1])
@@ -213,7 +219,7 @@ def article(repo: dict, root: bool = False) -> str:
             f'<p class="where">{where}</p>{paragraphs}{credits}{links}{inside}{facts(repo)}</div></article>')
 
 
-def group(data: dict) -> str:
+def group(data: dict, number: int) -> str:
     key = f'g-{data["id"]}'
     note = f'<p class="note">{esc(data["note"])}</p>' if data.get("note") else ""
     roots = [r for r in data["repos"] if r["role"] == "root"]
@@ -224,10 +230,10 @@ def group(data: dict) -> str:
         body += '<ul class="tree">' + "".join(f"<li>{article(r)}</li>" for r in children) + "</ul>"
     body += "".join(article(r) for r in singles)
     return (f'<section class="group group--{esc(data["id"])}" aria-labelledby="{key}">'
-            f'<h2 id="{key}">{esc(data["title"])}</h2>{note}{body}</section>')
+            f'{heading(key, number, data["title"])}{note}{body}</section>')
 
 
-def certifications(data: dict) -> str:
+def certifications(data: dict, number: int) -> str:
     """The certifications: CompTIA's and Cisco's, then the stackables, each shown with
     the certifications it is made of (pointing at one lights those up)."""
     certs = data["certifications"]
@@ -238,7 +244,7 @@ def certifications(data: dict) -> str:
     blocks = []
     for g in certs["groups"]:
         rows = "".join(
-            f'<li class="cert cert--{esc(c["id"])}"><span class="cert__label"><span class="visually-hidden">{esc(c["short"])}</span>'
+            f'<li class="cert cert--{esc(c["id"])}" id="cert-{esc(c["id"])}"><span class="cert__label"><span class="visually-hidden">{esc(c["short"])}</span>'
             f'{pixel_svg(c["short"], "pixel--cert")}</span>'
             f'<span class="cert__text"><strong>{esc(c["name"])}</strong> <span class="cert__scope">{esc(c["scope"])}</span></span></li>'
             for c in g["certs"])
@@ -250,17 +256,51 @@ def certifications(data: dict) -> str:
         for s in certs["stackables"])
     blocks.append(f'<h3 class="certs__issuer">{esc(certs["stackables_title"])}</h3><ul class="stacks">{stacks}</ul>')
     return (f'<section class="group group--certs certs" id="certifications" aria-labelledby="g-certs">'
-            f'<h2 id="g-certs">Certifications</h2><p class="note">{esc(certs["note"])}{verify}</p>{"".join(blocks)}</section>')
+            f'{heading("g-certs", number, "Certifications")}<p class="note">{esc(certs["note"])}{verify}</p>{"".join(blocks)}</section>')
 
 
-def youtube(data: dict) -> str:
+def youtube(data: dict, number: int) -> str:
     yt = data["youtube"]
     return (f'<section class="group group--youtube" id="youtube" aria-labelledby="g-youtube">'
-            f'<h2 id="g-youtube">{esc(yt["title"])}</h2>'
+            f'{heading("g-youtube", number, yt["title"])}'
             f'<div class="channel"><h3 class="channel__name"><span class="visually-hidden">{esc(yt["handle"])}</span>'
             f'{pixel_svg(yt["handle"], "pixel--name")}</h3>'
             f'<p>{esc(yt["summary"])}</p>'
             f'<ul class="links"><li><a class="cta cta--video" href="{esc(yt["url"])}">Watch on YouTube</a></li></ul></div></section>')
+
+
+def about(data: dict, number: int) -> str:
+    a = data["about"]
+    roles = "".join(f"<li>{esc(role)}</li>" for role in a["roles"])
+    text = "".join(f"<p>{esc(p)}</p>" for p in a["paragraphs"])
+    return (f'<section class="group group--about" id="about" aria-labelledby="g-about">'
+            f'{heading("g-about", number, "About")}<ul class="roles" aria-label="Roles">{roles}</ul>'
+            f'<div class="about__text">{text}</div></section>')
+
+
+def skills(data: dict, number: int) -> str:
+    """Skill areas, each with its tools and links to where on the page it shows."""
+    sk = data["skills"]
+    rows = "".join(
+        f'<li class="skill"><span class="skill__name">{esc(area["name"])}</span>'
+        f'<span class="skill__body"><span class="skill__items">'
+        + "".join(f'<span class="part">{esc(item)}</span>' for item in area["items"])
+        + '</span><span class="skill__seen">Seen in '
+        + ", ".join(f'<a href="{esc(href)}">{esc(text)}</a>' for text, href in area["seen"])
+        + "</span></span></li>"
+        for area in sk["areas"])
+    return (f'<section class="group group--skills" id="skills" aria-labelledby="g-skills">'
+            f'{heading("g-skills", number, sk["title"])}<p class="note">{esc(sk["note"])}</p>'
+            f'<ul class="skills">{rows}</ul></section>')
+
+
+def person(data: dict) -> str:
+    """Structured data for search engines: who the page is about, and where else to find him."""
+    same = [link["url"] for link in data["links"] if link.get("url")]
+    info = {"@context": "https://schema.org", "@type": "Person", "name": data["owner"], "url": SITE,
+            "jobTitle": ", ".join(data["about"]["roles"]), "sameAs": same,
+            "knowsAbout": [item for area in data["skills"]["areas"] for item in area["items"]]}
+    return json.dumps(info, ensure_ascii=False).replace("</", "<\\/")
 
 
 def page(data: dict) -> str:
@@ -268,14 +308,16 @@ def page(data: dict) -> str:
     private = sum(1 for g in data["groups"] for r in g["repos"] if r["private"])
     projects = [g for g in data["groups"] if g["id"] != "site"]
     site = [g for g in data["groups"] if g["id"] == "site"]
-    groups = ("".join(group(g) for g in projects) + certifications(data) + youtube(data)
-              + "".join(group(g) for g in site))
+    builders = ([lambda n: about(data, n)] + [lambda n, g=g: group(g, n) for g in projects]
+                + [lambda n: skills(data, n), lambda n: certifications(data, n), lambda n: youtube(data, n)]
+                + [lambda n, g=g: group(g, n) for g in site])
+    groups = "\n".join(build(number) for number, build in enumerate(builders, 1))
     # Links without an address yet (filled in data/repos.json) are left out.
     elsewhere = "".join(f'<li><a href="{esc(link["url"])}">{esc(link["text"])}</a></li>'
                         for link in data["links"] if link.get("url"))
     total_certs = sum(len(g["certs"]) for g in data["certifications"]["groups"]) + len(data["certifications"]["stackables"])
-    jumps = [("#g-fe-xico", "FE-XicoOS"), ("#g-game", "The Far Backrooms"), ("#certifications", "Certifications"),
-             ("#youtube", "On YouTube")]
+    jumps = [("#about", "About"), ("#g-fe-xico", "FE-XicoOS"), ("#g-game", "The Far Backrooms"),
+             ("#skills", "Skills"), ("#certifications", "Certifications"), ("#youtube", "On YouTube")]
     nav = "".join(f'<li><a href="{href}">{esc(text)}</a></li>' for href, text in jumps)
     return f"""<!doctype html>
 <html lang="en">
@@ -299,11 +341,13 @@ def page(data: dict) -> str:
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{esc(data["owner"])}, drawn in pixels, with the FE-XicoOS, FE-Xico UpdateR and FE-Xico Doctor icons and the Level 0 carpet">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="{esc(data["owner"])}">
 <link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">{person(data)}</script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to the repositories</a>
-<header class="masthead">
+<a class="skip" href="#main">Skip to the content</a>
+<header class="masthead" id="top">
 <h1><span class="visually-hidden">{esc(data["owner"])}</span>{pixel_svg(data["owner"], "pixel--hero", glow_dot=True)}</h1>
 <p class="intro">{esc(data["intro"])}</p>
 <ul class="elsewhere">{elsewhere}</ul>
@@ -314,9 +358,36 @@ def page(data: dict) -> str:
 {groups}
 </main>
 <footer class="colophon">
+<ul class="elsewhere elsewhere--footer">{elsewhere}<li><a href="#top">Back to the top</a></li></ul>
 <p>Facts as of {esc(date(data["as_of"]))}. Private repositories are described here, but their source stays private.</p>
 <p>Headings are drawn from GNU Unifont glyphs. The colours are FE-Xico Aurora's, and the icons are the apps' own.</p>
+<p>&copy; {esc(data["as_of"][:4])} {esc(data["owner"])}</p>
 </footer>
+</body>
+</html>
+"""
+
+
+def not_found(data: dict) -> str:
+    """GitHub Pages shows 404.html for any address that isn't on the site."""
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found: {esc(data["owner"])}</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<main class="lost">
+<h1><span class="visually-hidden">404</span>{pixel_svg("404", "pixel--hero")}</h1>
+<p class="intro">You noclipped out of the page. There's nothing at this address, only the hum of the fluorescent lights.</p>
+<ul class="links"><li><a class="cta" href="/">Back to {esc(data["owner"])}</a></li></ul>
+</main>
 </body>
 </html>
 """
@@ -391,9 +462,10 @@ def card(data: dict) -> None:
 def main() -> None:
     data = json.loads(DATA.read_text())
     OUT.write_text(page(data))
+    (ROOT / "404.html").write_text(not_found(data))
     favicon()
     card(data)
-    print(f"wrote {OUT.relative_to(ROOT)}, assets/favicon.png, assets/apple-touch-icon.png, assets/og.png")
+    print(f"wrote {OUT.relative_to(ROOT)}, 404.html, assets/favicon.png, assets/apple-touch-icon.png, assets/og.png")
 
 
 if __name__ == "__main__":

@@ -2,6 +2,19 @@
   "owner": "RoYoshi",
   "as_of": "2026-11-11",
   "intro": "An operating system and the apps built into it, a horror game, eleven IT certifications and a YouTube channel: what RoYoshi builds, designs and knows.",
+  "about": {
+    "roles": [
+      "Programmer",
+      "Game and level designer",
+      "Graphic designer",
+      "Linux system builder"
+    ],
+    "paragraphs": [
+      "RoYoshi makes whole things, from the code to the logo: a Linux desktop with a look of its own and the apps built into it, and a multiplayer horror game with its own website.",
+      "He programs The Far Backrooms and designs its game, levels, website, logos and promotional art, together with co-creator ₘₐᵣᵢᵢₖᵧᵤ. He builds FE-XicoOS on Fedora, and drew its green top hat and the FE-Xico Doctor badge you see on this page himself.",
+      "Behind the projects are eleven IT certifications from CompTIA and Cisco, covering support, networking, Linux and security."
+    ]
+  },
   "groups": [
     {
       "id": "fe-xico",
@@ -208,6 +221,132 @@
       "text": "Certifications on Credly"
     }
   ],
+  "skills": {
+    "title": "What he works with",
+    "note": "The tools and skills behind the projects above, each with where you can see it.",
+    "areas": [
+      {
+        "name": "Programming",
+        "items": [
+          "Python",
+          "JavaScript",
+          "C++",
+          "QML",
+          "Shell"
+        ],
+        "seen": [
+          [
+            "FE-XicoOS",
+            "#fe-xicoos"
+          ],
+          [
+            "FE-Xico Doctor",
+            "#fe-xico-doctor"
+          ],
+          [
+            "The Far Backrooms",
+            "#the-far-backrooms"
+          ]
+        ]
+      },
+      {
+        "name": "Linux systems",
+        "items": [
+          "Fedora bootc images",
+          "KDE Plasma 6",
+          "Podman",
+          "Distrobox",
+          "Flatpak"
+        ],
+        "seen": [
+          [
+            "FE-XicoOS",
+            "#fe-xicoos"
+          ],
+          [
+            "Linux+",
+            "#cert-linuxplus"
+          ]
+        ]
+      },
+      {
+        "name": "Desktop apps",
+        "items": [
+          "Qt Quick and C++",
+          "Python",
+          "Plasma widgets"
+        ],
+        "seen": [
+          [
+            "FE-Xico UpdateR",
+            "#fe-xico-updater"
+          ],
+          [
+            "FE-Xico Doctor",
+            "#fe-xico-doctor"
+          ],
+          [
+            "LaunchX",
+            "#fe-xicoos"
+          ]
+        ]
+      },
+      {
+        "name": "Games and the web",
+        "items": [
+          "PixiJS",
+          "Node.js",
+          "Real-time multiplayer",
+          "HTML and CSS",
+          "GitHub Pages"
+        ],
+        "seen": [
+          [
+            "The Far Backrooms",
+            "#the-far-backrooms"
+          ],
+          [
+            "This site",
+            "#royoshi-github-io"
+          ]
+        ]
+      },
+      {
+        "name": "Design",
+        "items": [
+          "Logos and icons",
+          "Desktop theming",
+          "Pixel type",
+          "Promotional art"
+        ],
+        "seen": [
+          [
+            "FE-Xico Aurora",
+            "#fe-xicoos"
+          ],
+          [
+            "The Far Backrooms",
+            "#the-far-backrooms"
+          ]
+        ]
+      },
+      {
+        "name": "IT",
+        "items": [
+          "Support",
+          "Networking",
+          "Security",
+          "Troubleshooting"
+        ],
+        "seen": [
+          [
+            "Certifications",
+            "#certifications"
+          ]
+        ]
+      }
+    ]
+  },
   "certifications": {
     "verify_url": null,
     "note": "Eleven certifications: four from CompTIA, three from Cisco, and the four that CompTIA awards for holding its certifications together.",
