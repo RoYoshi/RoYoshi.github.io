@@ -1,18 +1,19 @@
 {
   "owner": "RoYoshi",
   "as_of": "2026-11-12",
-  "intro": "An operating system and the apps built into it, a horror game, eleven IT certifications and a YouTube channel: what RoYoshi builds, designs and knows.",
+  "intro": "An operating system and the apps built into it, a horror game, eleven IT certifications, a YouTube channel and 3,237 hours of Team Fortress 2: what RoYoshi builds, designs and knows.",
   "about": {
     "roles": [
       "Programmer",
       "Game and level designer",
       "Graphic designer",
+      "Video editor",
       "Linux system builder"
     ],
     "paragraphs": [
       "RoYoshi makes whole things, from the code to the logo: a Linux desktop with a look of its own and the apps built into it, and a multiplayer horror game with its own website.",
       "He programs The Far Backrooms and designs its game, levels, website, logos and promotional art, together with co-creator ₘₐᵣᵢᵢₖᵧᵤ. He builds FE-XicoOS on Fedora, and drew its green top hat and the FE-Xico Doctor badge you see on this page himself.",
-      "Behind the projects are eleven IT certifications from CompTIA and Cisco, covering support, networking, Linux and security."
+      "Behind the projects are eleven IT certifications from CompTIA and Cisco, covering support, networking, Linux and security. Away from them he plays shooters of every kind, edits videos, and has been president of YEXICO, his own gaming community, since 2023."
     ]
   },
   "terminal": {
@@ -24,6 +25,7 @@
       "drawing his own icons",
       "teaching the Hound to hunt",
       "playing Team Fortress 2",
+      "grinding TF2 achievements (482/519)",
       "collecting certifications",
       "editing the next jumpscare",
       "staying determined",
@@ -54,6 +56,10 @@
     [
       "Plays",
       "TF2, Roblox, Undertale"
+    ],
+    [
+      "Steam",
+      "level 77, 75 games"
     ],
     [
       "Certs",
@@ -249,7 +255,7 @@
     },
     {
       "label": "Steam",
-      "url": null,
+      "url": "https://steamcommunity.com/id/RoYoshi/",
       "text": "Steam"
     },
     {
@@ -368,6 +374,24 @@
         ]
       },
       {
+        "name": "Video",
+        "items": [
+          "Video editing",
+          "Gameplay videos",
+          "Screenshots and artwork"
+        ],
+        "seen": [
+          [
+            "On YouTube",
+            "#youtube"
+          ],
+          [
+            "On Steam",
+            "#steam"
+          ]
+        ]
+      },
+      {
         "name": "IT",
         "items": [
           "Support",
@@ -480,6 +504,60 @@
     "url": "https://www.youtube.com/@Ro_Yoshi",
     "summary": "RoYoshi's gaming channel: Roblox, Team Fortress 2 and other Steam games, with edits, tips and the occasional jumpscare."
   },
+  "steam": {
+    "title": "On Steam",
+    "url": "https://steamcommunity.com/id/RoYoshi/",
+    "summary": "An FPS player first, and Team Fortress 2 most of all. On Steam he posts gameplay videos, screenshots and artwork, shares items on the Garry's Mod Workshop, writes reviews and a TF2 guide, and runs YEXICO, the gaming community he has been president of since 2023.",
+    "stats": [
+      [
+        "77",
+        "Steam level"
+      ],
+      [
+        "75",
+        "games"
+      ],
+      [
+        "3,237",
+        "hours of Team Fortress 2"
+      ],
+      [
+        "482/519",
+        "TF2 achievements"
+      ],
+      [
+        "1,178",
+        "hours in 3D Aim Trainer"
+      ],
+      [
+        "5",
+        "Garry's Mod Workshop items"
+      ]
+    ],
+    "ranks_title": "Peak ranks on PC",
+    "ranks": [
+      [
+        "Unreal",
+        "Fortnite",
+        "Fortnite's highest ranked tier."
+      ],
+      [
+        "Grandmaster",
+        "Marvel Rivals",
+        ""
+      ],
+      [
+        "Emerald",
+        "Rainbow Six Siege X",
+        ""
+      ],
+      [
+        "Top 5%",
+        "SteelSeries Aim Trainer",
+        "Worldwide."
+      ]
+    ]
+  },
   "favourites": {
     "title": "Favourites",
     "note": "Off the clock: the games and the characters RoYoshi likes best of all time.",
@@ -489,7 +567,7 @@
         "items": [
           {
             "name": "Team Fortress 2",
-            "line": "Valve's class-based team shooter, and a regular on his channel."
+            "line": "Valve's class-based team shooter: 3,237 hours, 482 of 519 achievements, and a regular on his channel."
           },
           {
             "name": "Roblox",

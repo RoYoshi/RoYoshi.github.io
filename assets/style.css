@@ -1028,6 +1028,54 @@ span.path {
   margin: 0;
 }
 
+/* Steam: the numbers in pixels ---------------------------------------------------- */
+
+.steam__summary {
+  max-width: var(--measure);
+  margin: 20px 0 36px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 18px 16px;
+  border: 1px solid rgb(255 0 255 / 0.3);
+  transition: border-color 140ms ease-out, box-shadow 200ms ease-out;
+}
+
+.stat:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 26px rgb(0 255 0 / 0.16);
+}
+
+.stat__value {
+  line-height: 0;
+  color: var(--green);
+}
+
+.pixel--stat {
+  --px: 3px;
+}
+
+.stat__label {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.group--steam .certs__issuer {
+  margin-top: 48px;
+}
+
 /* Favourites: a character-select screen ---------------------------------------- */
 
 .picks {
@@ -1235,6 +1283,15 @@ span.path {
   .picks {
     grid-template-columns: minmax(0, 1fr);
     gap: 20px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .pixel--stat {
+    --px: 2px;
   }
 
   .cert {
