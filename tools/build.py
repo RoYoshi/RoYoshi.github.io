@@ -214,9 +214,16 @@ def article(repo: dict, root: bool = False) -> str:
     entities = ""
     if repo.get("entities"):
         entities = ('<h4 class="sub">Who hunts you</h4><ul class="entities">' + "".join(
-            f'<li class="entity entity--{slug(e["name"])}"><span class="entity__name">'
+            f'<li class="entity entity--{slug(e["name"])}">{ENTITY_MARKS.get(slug(e["name"]), "")}<span class="entity__name">'
             f'<span class="visually-hidden">{esc(e["name"])}</span>{pixel_svg(e["name"], "pixel--cert")}</span>'
             f'<span class="entity__line">{esc(e["line"])}</span></li>' for e in repo["entities"]) + "</ul>")
+    status = ""
+    if repo.get("status"):
+        status = f'<p class="status"><span class="status__dot" aria-hidden="true"></span>{esc(repo["status"])}</p>'
+    specs = ""
+    if repo.get("specs"):
+        specs = '<dl class="specs">' + "".join(
+            f"<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>" for k, v in repo["specs"]) + "</dl>"
     features = ""
     if repo.get("features"):
         features = ('<h4 class="sub">How it\'s built</h4><ul class="features">'
@@ -231,8 +238,15 @@ def article(repo: dict, root: bool = False) -> str:
             f'<div class="repo__body">'
             f'<h3 class="repo__name" id="{key}-name"><span class="visually-hidden">{esc(repo["name"])}</span>'
             f'{pixel_svg(repo["name"], "pixel--name")}</h3>'
-            f'<p class="where">{where}</p>{paragraphs}{rule}{entities}{features}{credits}{links}{inside}{facts(repo)}</div></article>')
+            f'<p class="where">{where}</p>{status}{paragraphs}{specs}{rule}{entities}{features}{credits}{links}{inside}{facts(repo)}</div></article>')
 
+
+ENTITY_MARKS = {
+    # The pack: three lights that pass a sighting along. The Smiler: its grin.
+    "the-hound": '<span class="pack" aria-hidden="true"><i></i><i></i><i></i></span>',
+    "the-smiler": ('<svg class="grin" viewBox="0 0 120 60" aria-hidden="true"><ellipse cx="38" cy="16" rx="7" ry="4.5"/>'
+                   '<ellipse cx="82" cy="16" rx="7" ry="4.5"/><path d="M14 30 Q60 70 106 30 Q60 52 14 30Z"/></svg>'),
+}
 
 SMILER = ('<div class="smiler" aria-hidden="true"><svg viewBox="0 0 120 60">'
           '<ellipse cx="38" cy="16" rx="7" ry="4.5"/><ellipse cx="82" cy="16" rx="7" ry="4.5"/>'
@@ -253,7 +267,8 @@ def group(data: dict, number: int) -> str:
     body += "".join(article(r) for r in singles)
     # Level 0 around the game: fluorescent lights above, wallpaper behind, carpet below.
     room = ('<div class="room" aria-hidden="true"><span class="light"></span><span class="light"></span>'
-            '<span class="light light--bad"></span><span class="light"></span></div>') if data["id"] == "game" else ""
+            '<span class="light light--bad"></span><span class="light"></span>'
+            '<p class="hud"><span>PLAY &#9654;</span><span>LEVEL 0</span><span data-timecode>00:00:00</span></p></div>') if data["id"] == "game" else ""
     return (f'<section class="group group--{esc(data["id"])}" aria-labelledby="{key}">{room}'
             f'{heading(key, number, data["title"])}{note}{body}{SMILER if data["id"] == "game" else ""}</section>')
 
@@ -368,6 +383,8 @@ def yexico(data: dict, number: int) -> str:
         f'<li><a class="{"cta" if link.get("primary") else ""}" href="{esc(link["url"])}">{esc(link["text"])}</a></li>'
         for link in y["links"]) + "</ul>"
     photo = y["photo"]
+    # The flag is cut into vertical strips; each rises and falls a beat after the last, so it ripples.
+    strips = "".join(f'<span style="--i:{i}"></span>' for i in range(48))
     anthem = ""
     if y.get("anthem"):
         vid = y["anthem"]
@@ -381,8 +398,9 @@ def yexico(data: dict, number: int) -> str:
                   f'<figcaption>The anthem: {esc(vid["title"])}, on his channel.</figcaption></figure>')
     return (f'<section class="group group--yexico" id="yexico" aria-labelledby="g-yexico">'
             f'{heading("g-yexico", number, y["title"])}'
-            f'<div class="yexico"><div class="flagpole"><img class="flag" src="{esc(y["flag"])}" '
-            f'alt="The YEXICO flag: green, white and green, with a smile in the middle" width="640" height="320"></div>'
+            f'<div class="yexico"><div class="flagpole"><span class="pole" aria-hidden="true"></span>'
+            f'<div class="flag" role="img" aria-label="The YEXICO flag: green, white and green, with a smile in the middle">'
+            f'{strips}</div><span class="plinth" aria-hidden="true"></span></div>'
             f'<div class="yexico__text"><p class="motto">{esc(y["motto"]).replace(" :(", '&nbsp;<span class="nowrap">:(</span>')}</p>{text}'
             f'<p class="president">President: <strong>{esc(data["owner"])}</strong>, 2023 to now</p>{links}</div></div>'
             f'<ul class="stats stats--yexico" aria-label="YEXICO in numbers">{stats}</ul>'

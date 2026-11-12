@@ -63,6 +63,17 @@
     });
   });
 
+  /* The tape counter in Level 0 runs while you're here. */
+  const counter = document.querySelector("[data-timecode]");
+  if (counter && !calm) {
+    const start = Date.now();
+    setInterval(() => {
+      const s = Math.floor((Date.now() - start) / 1000);
+      counter.textContent = [s / 3600, (s / 60) % 60, s % 60]
+        .map((v) => String(Math.floor(v)).padStart(2, "0")).join(":");
+    }, 1000);
+  }
+
   /* Type "noclip" anywhere and fall through the page into Level 0. Esc climbs back out. */
   const word = "noclip";
   let typed = "";

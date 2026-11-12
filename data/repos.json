@@ -228,7 +228,7 @@
             },
             {
               "name": "The Smiler",
-              "line": "A grin in the dark, straight from the Backrooms canon. Keep the lights on."
+              "line": "A grin waiting in the dark, straight from the Backrooms canon."
             }
           ],
           "features": [
@@ -236,6 +236,25 @@
             "Everyone in a session meets the same monsters, run by one Node.js server",
             "One server so far, in US Central, with more locations planned",
             "Every candidate build is tested by a QA team before it ships"
+          ],
+          "status": "In active development: stage 2F",
+          "specs": [
+            [
+              "Level",
+              "0"
+            ],
+            [
+              "Entities",
+              "2"
+            ],
+            [
+              "Players",
+              "Multiplayer"
+            ],
+            [
+              "Runs in",
+              "The browser"
+            ]
           ]
         }
       ]
