@@ -1028,6 +1028,100 @@ span.path {
   margin: 0;
 }
 
+/* Favourites: a character-select screen ---------------------------------------- */
+
+.picks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pick {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 18px 18px;
+  border: 1px solid rgb(232 239 235 / 0.22);
+  background: linear-gradient(to bottom, rgb(255 255 255 / 0.03), transparent 60%);
+  transition: border-color 140ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out;
+}
+
+.picks--characters .pick {
+  border-color: rgb(255 0 255 / 0.4);
+}
+
+/* Pointing at a pick moves the player-one cursor onto it. */
+.pick::after {
+  content: "1P";
+  position: absolute;
+  top: -11px;
+  right: 12px;
+  padding: 0 6px;
+  background: var(--green);
+  color: var(--black);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 20px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 140ms ease-out, transform 140ms ease-out;
+}
+
+.pick:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green), 0 0 30px rgb(0 255 0 / 0.18);
+  transform: translateY(-3px);
+}
+
+.pick:hover::after {
+  opacity: 1;
+  transform: none;
+}
+
+.pick__badge {
+  position: absolute;
+  top: -11px;
+  left: 12px;
+  padding: 0 6px;
+  border: 1px solid var(--magenta);
+  background: var(--black);
+  color: var(--magenta);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  line-height: 18px;
+}
+
+.group--favourites .certs__issuer {
+  margin-bottom: 24px;
+}
+
+.pick__name {
+  line-height: 0;
+  color: var(--text);
+}
+
+.pick__line {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* A text box, as in a certain RPG about determination. */
+.textbox {
+  max-width: 34em;
+  margin: 44px 0 0;
+  padding: 18px 22px;
+  border: 3px solid var(--text);
+  background: var(--black);
+  font-family: var(--mono);
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
 /* Colophon ------------------------------------------------------------------ */
 
 .colophon {
@@ -1138,6 +1232,11 @@ span.path {
     row-gap: 10px;
   }
 
+  .picks {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
   .cert {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 10px;
@@ -1167,7 +1266,8 @@ span.path {
   }
 
   .hat,
-  .repo__mark img {
+  .repo__mark img,
+  .pick {
     transition: none;
   }
 

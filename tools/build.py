@@ -316,6 +316,26 @@ def skills(data: dict, number: int) -> str:
             f'<ul class="skills">{rows}</ul></section>')
 
 
+def favourites(data: dict, number: int) -> str:
+    """Favourite games and characters as a character-select screen, then a text box."""
+    fav = data["favourites"]
+    lists = []
+    for group_ in fav["lists"]:
+        tiles = "".join(
+            f'<li class="pick">'
+            + (f'<span class="pick__badge">{esc(item["badge"])}</span>' if item.get("badge") else "")
+            + f'<span class="pick__name"><span class="visually-hidden">{esc(item["name"])}</span>'
+            f'{pixel_svg(item["name"], "pixel--cert")}</span>'
+            f'<span class="pick__line">{esc(item["line"])}</span></li>'
+            for item in group_["items"])
+        lists.append(f'<h3 class="certs__issuer">{esc(group_["title"])}</h3>'
+                     f'<ul class="picks picks--{slug(group_["title"])}">{tiles}</ul>')
+    box = f'<p class="textbox">{esc(fav["box"])}</p>' if fav.get("box") else ""
+    return (f'<section class="group group--favourites" id="favourites" aria-labelledby="g-favourites">'
+            f'{heading("g-favourites", number, fav["title"])}<p class="note">{esc(fav["note"])}</p>'
+            f'{"".join(lists)}{box}</section>')
+
+
 def person(data: dict) -> str:
     """Structured data for search engines: who the page is about, and where else to find him."""
     same = [link["url"] for link in data["links"] if link.get("url")]
@@ -331,7 +351,8 @@ def page(data: dict) -> str:
     projects = [g for g in data["groups"] if g["id"] != "site"]
     site = [g for g in data["groups"] if g["id"] == "site"]
     builders = ([lambda n: about(data, n)] + [lambda n, g=g: group(g, n) for g in projects]
-                + [lambda n: skills(data, n), lambda n: certifications(data, n), lambda n: youtube(data, n)]
+                + [lambda n: skills(data, n), lambda n: certifications(data, n), lambda n: youtube(data, n),
+                   lambda n: favourites(data, n)]
                 + [lambda n, g=g: group(g, n) for g in site])
     groups = "\n".join(build(number) for number, build in enumerate(builders, 1))
     # Links without an address yet (filled in data/repos.json) are left out.
@@ -339,7 +360,7 @@ def page(data: dict) -> str:
                         for link in data["links"] if link.get("url"))
     total_certs = sum(len(g["certs"]) for g in data["certifications"]["groups"]) + len(data["certifications"]["stackables"])
     jumps = [("#about", "About"), ("#g-fe-xico", "FE-XicoOS"), ("#g-game", "The Far Backrooms"),
-             ("#skills", "Skills"), ("#certifications", "Certifications"), ("#youtube", "On YouTube")]
+             ("#skills", "Skills"), ("#certifications", "Certifications"), ("#youtube", "On YouTube"), ("#favourites", "Favourites")]
     t = data["terminal"]
     # A shell prompt on RoYoshi's own machine; the script types the lines in turn.
     prompt = (f'<p class="prompt"><span class="p-user">{esc(t["user"])}@{esc(t["host"])}</span>:<span class="p-path">~</span>$ '

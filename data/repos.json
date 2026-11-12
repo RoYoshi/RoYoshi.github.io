@@ -23,8 +23,10 @@
       "building an operating system",
       "drawing his own icons",
       "teaching the Hound to hunt",
+      "playing Team Fortress 2",
       "collecting certifications",
       "editing the next jumpscare",
+      "staying determined",
       "noclipping into Level 0"
     ]
   },
@@ -48,6 +50,10 @@
     [
       "Game",
       "The Far Backrooms"
+    ],
+    [
+      "Plays",
+      "TF2, Roblox, Undertale"
     ],
     [
       "Certs",
@@ -473,5 +479,48 @@
     "handle": "@Ro_Yoshi",
     "url": "https://www.youtube.com/@Ro_Yoshi",
     "summary": "RoYoshi's gaming channel: Roblox, Team Fortress 2 and other Steam games, with edits, tips and the occasional jumpscare."
+  },
+  "favourites": {
+    "title": "Favourites",
+    "note": "Off the clock: the games and the characters RoYoshi likes best of all time.",
+    "lists": [
+      {
+        "title": "Games",
+        "items": [
+          {
+            "name": "Team Fortress 2",
+            "line": "Valve's class-based team shooter, and a regular on his channel."
+          },
+          {
+            "name": "Roblox",
+            "line": "The platform where players make the games, and the other regular on his channel."
+          },
+          {
+            "name": "Undertale",
+            "line": "Toby Fox's RPG where nobody has to die."
+          }
+        ]
+      },
+      {
+        "title": "Characters",
+        "items": [
+          {
+            "name": "Mr. Fantastic",
+            "badge": "Tied #1",
+            "line": "Reed Richards of Marvel's Fantastic Four: a genius who builds whatever the problem needs, and stretches to reach it."
+          },
+          {
+            "name": "Jack Walten",
+            "badge": "Tied #1",
+            "line": "The man the tapes are named after in The Walten Files, Martin Walls's analog-horror series."
+          },
+          {
+            "name": "Ryu",
+            "line": "Street Fighter's wandering martial artist, always training for the next fight."
+          }
+        ]
+      }
+    ],
+    "box": "* Knowing RoYoshi's favourites fills you with DETERMINATION."
   }
 }
