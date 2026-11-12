@@ -5,7 +5,7 @@
   const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
   root.classList.add("js");
 
-  /* The prompt under the name types what RoYoshi is up to, one line at a time. */
+  /* The prompt under the name types a command, picked at random each time. */
   const cmd = document.querySelector(".prompt__cmd");
   if (cmd && !calm) {
     let lines = [];
@@ -17,7 +17,10 @@
         await wait(2600);
         const text = cmd.textContent;
         for (let n = text.length; n >= 0; n--) { cmd.textContent = text.slice(0, n); await wait(22); }
-        i = (i + 1) % lines.length;
+        /* A different line each time, never the same one twice in a row. */
+        let next = i;
+        while (next === i) next = Math.floor(Math.random() * lines.length);
+        i = next;
         await wait(260);
         for (const ch of lines[i]) { cmd.textContent += ch; await wait(48 + Math.random() * 50); }
       }
