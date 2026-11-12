@@ -25,6 +25,7 @@
     "host": "FE-ROYO",
     "lines": [
       "./build --everything",
+      "echo \"Hello YEXICO!\"",
       "sudo bootc upgrade",
       "hat --tip",
       "whoami  # president of YEXICO",
