@@ -206,6 +206,21 @@ def article(repo: dict, root: bool = False) -> str:
     if repo.get("inside"):
         inside = '<ul class="inside">' + "".join(f"<li>{esc(item)}</li>" for item in repo["inside"]) + "</ul>"
     credits = f'<p class="credits">{esc(repo["credits"])}</p>' if repo.get("credits") else ""
+    # The game's extras: the rule its monsters live by, who hunts you, and how it's built.
+    rule = ""
+    if repo.get("rule"):
+        rule = (f'<blockquote class="rule"><p>{esc(repo["rule"])}</p>'
+                f'<footer>The one rule every monster follows</footer></blockquote>')
+    entities = ""
+    if repo.get("entities"):
+        entities = ('<h4 class="sub">Who hunts you</h4><ul class="entities">' + "".join(
+            f'<li class="entity entity--{slug(e["name"])}"><span class="entity__name">'
+            f'<span class="visually-hidden">{esc(e["name"])}</span>{pixel_svg(e["name"], "pixel--cert")}</span>'
+            f'<span class="entity__line">{esc(e["line"])}</span></li>' for e in repo["entities"]) + "</ul>")
+    features = ""
+    if repo.get("features"):
+        features = ('<h4 class="sub">How it\'s built</h4><ul class="features">'
+                    + "".join(f"<li>{esc(item)}</li>" for item in repo["features"]) + "</ul>")
     links = ""
     if repo.get("links"):
         links = '<ul class="links">' + "".join(
@@ -216,7 +231,7 @@ def article(repo: dict, root: bool = False) -> str:
             f'<div class="repo__body">'
             f'<h3 class="repo__name" id="{key}-name"><span class="visually-hidden">{esc(repo["name"])}</span>'
             f'{pixel_svg(repo["name"], "pixel--name")}</h3>'
-            f'<p class="where">{where}</p>{paragraphs}{credits}{links}{inside}{facts(repo)}</div></article>')
+            f'<p class="where">{where}</p>{paragraphs}{rule}{entities}{features}{credits}{links}{inside}{facts(repo)}</div></article>')
 
 
 SMILER = ('<div class="smiler" aria-hidden="true"><svg viewBox="0 0 120 60">'
@@ -236,7 +251,10 @@ def group(data: dict, number: int) -> str:
     if children:
         body += '<ul class="tree">' + "".join(f"<li>{article(r)}</li>" for r in children) + "</ul>"
     body += "".join(article(r) for r in singles)
-    return (f'<section class="group group--{esc(data["id"])}" aria-labelledby="{key}">'
+    # Level 0 around the game: fluorescent lights above, wallpaper behind, carpet below.
+    room = ('<div class="room" aria-hidden="true"><span class="light"></span><span class="light"></span>'
+            '<span class="light light--bad"></span><span class="light"></span></div>') if data["id"] == "game" else ""
+    return (f'<section class="group group--{esc(data["id"])}" aria-labelledby="{key}">{room}'
             f'{heading(key, number, data["title"])}{note}{body}{SMILER if data["id"] == "game" else ""}</section>')
 
 
@@ -278,7 +296,9 @@ def youtube(data: dict, number: int) -> str:
 
 def about(data: dict, number: int) -> str:
     a = data["about"]
-    roles = "".join(f"<li>{esc(role)}</li>" for role in a["roles"])
+    links = a.get("role_links", {})
+    roles = "".join(f'<li><a href="{esc(links[role])}">{esc(role)}</a></li>' if role in links else f"<li>{esc(role)}</li>"
+                    for role in a["roles"])
     text = "".join(f"<p>{esc(p)}</p>" for p in a["paragraphs"])
     t = data["terminal"]
     title = f'{t["user"]}@{t["host"]}'
@@ -336,6 +356,42 @@ def steam(data: dict, number: int) -> str:
             f'<ul class="links"><li><a class="cta" href="{esc(st["url"])}">See the profile on Steam</a></li></ul></section>')
 
 
+def yexico(data: dict, number: int) -> str:
+    """YEXICO, the community RoYoshi is president of: its flag, motto, numbers and a photo."""
+    y = data["yexico"]
+    stats = "".join(
+        f'<li class="stat"><span class="stat__value"><span class="visually-hidden">{esc(value)}</span>'
+        f'{pixel_svg(value, "pixel--stat")}</span><span class="stat__label">{esc(label)}</span></li>'
+        for value, label in y["stats"])
+    text = "".join(f"<p>{esc(p)}</p>" for p in y["summary"])
+    links = '<ul class="links">' + "".join(
+        f'<li><a class="{"cta" if link.get("primary") else ""}" href="{esc(link["url"])}">{esc(link["text"])}</a></li>'
+        for link in y["links"]) + "</ul>"
+    photo = y["photo"]
+    anthem = ""
+    if y.get("anthem"):
+        vid = y["anthem"]
+        # A still and a link until clicked (assets/site.js swaps in the player), so the page
+        # loads nothing from YouTube but the picture, and works as a plain link without the script.
+        anthem = (f'<figure class="anthem">'
+                  f'<a class="video" href="https://www.youtube.com/watch?v={esc(vid["id"])}" data-video="{esc(vid["id"])}" '
+                  f'data-title="{esc(vid["title"])}"><img src="https://i.ytimg.com/vi/{esc(vid["id"])}/hqdefault.jpg" alt="" '
+                  f'width="480" height="360" loading="lazy" decoding="async"><span class="video__play" aria-hidden="true"></span>'
+                  f'<span class="visually-hidden">Play {esc(vid["title"])}</span></a>'
+                  f'<figcaption>The anthem: {esc(vid["title"])}, on his channel.</figcaption></figure>')
+    return (f'<section class="group group--yexico" id="yexico" aria-labelledby="g-yexico">'
+            f'{heading("g-yexico", number, y["title"])}'
+            f'<div class="yexico"><div class="flagpole"><img class="flag" src="{esc(y["flag"])}" '
+            f'alt="The YEXICO flag: green, white and green, with a smile in the middle" width="640" height="320"></div>'
+            f'<div class="yexico__text"><p class="motto">{esc(y["motto"]).replace(" :(", '&nbsp;<span class="nowrap">:(</span>')}</p>{text}'
+            f'<p class="president">President: <strong>{esc(data["owner"])}</strong>, 2023 to now</p>{links}</div></div>'
+            f'<ul class="stats stats--yexico" aria-label="YEXICO in numbers">{stats}</ul>'
+            f'<div class="media">{anthem}'
+            f'<figure class="photo"><img src="{esc(photo["src"])}" alt="{esc(photo["alt"])}" width="{photo["width"]}" '
+            f'height="{photo["height"]}" loading="lazy" decoding="async"><figcaption>{esc(photo["caption"])}</figcaption></figure></div>'
+            f'</section>')
+
+
 def favourites(data: dict, number: int) -> str:
     """Favourite games and characters as a character-select screen, then a text box."""
     fav = data["favourites"]
@@ -372,7 +428,8 @@ def page(data: dict) -> str:
     site = [g for g in data["groups"] if g["id"] == "site"]
     builders = ([lambda n: about(data, n)] + [lambda n, g=g: group(g, n) for g in projects]
                 + [lambda n: skills(data, n), lambda n: certifications(data, n), lambda n: youtube(data, n),
-                   lambda n: steam(data, n), lambda n: favourites(data, n)]
+                   lambda n: steam(data, n), lambda n: yexico(data, n),
+                   lambda n: favourites(data, n)]
                 + [lambda n, g=g: group(g, n) for g in site])
     groups = "\n".join(build(number) for number, build in enumerate(builders, 1))
     # Links without an address yet (filled in data/repos.json) are left out.
@@ -380,7 +437,7 @@ def page(data: dict) -> str:
                         for link in data["links"] if link.get("url"))
     total_certs = sum(len(g["certs"]) for g in data["certifications"]["groups"]) + len(data["certifications"]["stackables"])
     jumps = [("#about", "About"), ("#g-fe-xico", "FE-XicoOS"), ("#g-game", "The Far Backrooms"),
-             ("#skills", "Skills"), ("#certifications", "Certifications"), ("#youtube", "On YouTube"), ("#steam", "On Steam"),
+             ("#skills", "Skills"), ("#certifications", "Certifications"), ("#youtube", "On YouTube"), ("#steam", "On Steam"), ("#yexico", "YEXICO"),
              ("#favourites", "Favourites")]
     t = data["terminal"]
     # A shell prompt on RoYoshi's own machine; the script types the lines in turn.

@@ -46,6 +46,23 @@
     });
   }
 
+  /* Videos load YouTube's player only when asked to (privacy-enhanced mode). */
+  document.querySelectorAll(".video[data-video]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey) return;
+      event.preventDefault();
+      const frame = document.createElement("iframe");
+      frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(link.dataset.video)}?autoplay=1&rel=0`;
+      frame.title = link.dataset.title || "Video";
+      frame.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      frame.allowFullscreen = true;
+      const box = document.createElement("div");
+      box.className = "video";
+      box.append(frame);
+      link.replaceWith(box);
+    });
+  });
+
   /* Type "noclip" anywhere and fall through the page into Level 0. Esc climbs back out. */
   const word = "noclip";
   let typed = "";

@@ -15,7 +15,10 @@
       "RoYoshi makes whole things, from the code to the logo: a Linux desktop with a look of its own and the apps built into it, and a multiplayer horror game with its own website.",
       "He programs The Far Backrooms and designs its game, levels, website, logos and promotional art, together with co-creator ₘₐᵣᵢᵢₖᵧᵤ. He builds FE-XicoOS on Fedora, and drew its green top hat and the FE-Xico Doctor badge you see on this page himself.",
       "Behind the projects are eleven IT certifications from CompTIA and Cisco, covering support, networking, Linux and security. Away from them he plays shooters of every kind, edits videos, and has been president of YEXICO, his own gaming community, since 2023."
-    ]
+    ],
+    "role_links": {
+      "President of YEXICO": "#yexico"
+    }
   },
   "terminal": {
     "user": "royoshi",
@@ -216,6 +219,23 @@
               "text": "Full credits",
               "url": "https://thefarbackrooms.com/credits.html"
             }
+          ],
+          "rule": "The server may know the truth, but a monster may only act on what it has actually seen or heard.",
+          "entities": [
+            {
+              "name": "The Hound",
+              "line": "Hunts with the pack: since stage 2F, what one has actually seen, the others can act on."
+            },
+            {
+              "name": "The Smiler",
+              "line": "A grin in the dark, straight from the Backrooms canon. Keep the lights on."
+            }
+          ],
+          "features": [
+            "Built for the browser, phones and low-end computers included",
+            "Everyone in a session meets the same monsters, run by one Node.js server",
+            "One server so far, in US Central, with more locations planned",
+            "Every candidate build is tested by a QA team before it ships"
           ]
         }
       ]
@@ -563,6 +583,51 @@
         "Worldwide."
       ]
     ]
+  },
+  "yexico": {
+    "title": "YEXICO",
+    "motto": "YEXICO, THE NATION, THE REPUBLIC, THE POWER, THE- I forgor :(",
+    "summary": [
+      "RoYoshi's gaming community, which he has led as president since 2023. It lives on Roblox, where he owns the YEXICO community and its own place is in the works, and on Steam as the group YEXICO Y.R.S, founded April 2, 2024.",
+      "Its flag is green and white, with a smile in the middle."
+    ],
+    "flag": "assets/yexico/flag.png",
+    "stats": [
+      [
+        "2023",
+        "president since"
+      ],
+      [
+        "25",
+        "members on Roblox"
+      ],
+      [
+        "5",
+        "members on Steam"
+      ]
+    ],
+    "photo": {
+      "src": "assets/yexico/presidential-building.jpg",
+      "width": 1200,
+      "height": 704,
+      "caption": "Raising the flag outside the YEXICO Presidential Building, in Roblox.",
+      "alt": "Four Roblox avatars standing under the YEXICO flag, outside a building with a sign that reads YEXICO Presidential Building"
+    },
+    "links": [
+      {
+        "text": "YEXICO on Roblox",
+        "url": "https://www.roblox.com/communities/7210778/YEXICO",
+        "primary": true
+      },
+      {
+        "text": "YEXICO on Steam",
+        "url": "https://steamcommunity.com/groups/YEX1337"
+      }
+    ],
+    "anthem": {
+      "id": "idwSJ5drg5U",
+      "title": "YEXICO Anthem (Lyric Video)"
+    }
   },
   "favourites": {
     "title": "Favourites",
