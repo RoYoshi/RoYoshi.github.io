@@ -427,18 +427,17 @@ def halo(image: Image.Image, text: str, x: int, y: int, scale: int) -> None:
 
 
 def favicon() -> None:
-    """The lit "i" in a panel-black square with a magenta edge."""
-    for size, name in ((64, "favicon.png"), (180, "apple-touch-icon.png")):
-        scale = max(1, (size * 3 // 4) // 12)  # the i is 12 pixels tall: about three quarters of the square
-        image = Image.new("RGBA", (size, size), BLACK + (255,))
-        rows, width, _ = bitmap("i")
-        x = (size - width * scale) // 2
-        y = (size - len(rows) * scale) // 2
-        halo(image, "i", x, y, scale)
-        paint(image, "i", x, y, scale, glow_dot=True)
-        edge = max(1, size // 32)
-        ImageDraw.Draw(image).rectangle([0, 0, size - 1, size - 1], outline=MAGENTA, width=edge)
-        image.convert("RGB").save(ROOT / "assets" / name, optimize=True)
+    """RoYoshi's mark, the FE-Xico hat: on its own for the browser tab, and on panel
+    black for the home screen (which would fill a see-through corner with its own colour)."""
+    hat = Image.open(ROOT / "assets/icons/fe-xicoos.png").convert("RGBA")
+    hat = hat.crop(hat.getbbox())
+    for size, name, backdrop, fill in ((64, "favicon.png", None, 1.0), (180, "apple-touch-icon.png", BLACK, 0.78)):
+        image = Image.new("RGBA", (size, size), (backdrop or BLACK) + (255 if backdrop else 0,))
+        fit = round(size * fill)
+        scale = fit / max(hat.size)
+        mark = hat.resize((round(hat.width * scale), round(hat.height * scale)), Image.LANCZOS)
+        image.alpha_composite(mark, ((size - mark.width) // 2, (size - mark.height) // 2))
+        (image if backdrop is None else image.convert("RGB")).save(ROOT / "assets" / name, optimize=True)
 
 
 def card(data: dict) -> None:

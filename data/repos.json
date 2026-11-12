@@ -180,7 +180,7 @@
           "name": "RoYoshi.github.io",
           "repo": "RoYoshi/RoYoshi.github.io",
           "private": false,
-          "icon": null,
+          "icon": "assets/icons/fe-xicoos.png",
           "role": "single",
           "summary": [
             "This page, published with GitHub Pages. Its headings are drawn pixel by pixel from GNU Unifont, like the bitmap font on the FE-XicoOS desktop, and its colours are FE-Xico Aurora's."
