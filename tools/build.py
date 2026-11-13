@@ -284,6 +284,19 @@ def group(data: dict, number: int) -> str:
             f'{heading(key, number, data["title"])}{note}{body}{SMILER if data["id"] == "game" else ""}</section>')
 
 
+def competition(data: dict, number: int) -> str:
+    """Contest results, set like the certifications: the placing in pixels, then what it was."""
+    comp = data["competition"]
+    rows = "".join(
+        f'<li class="cert cert--medal"><span class="cert__label"><span class="visually-hidden">{esc(r["short"])}</span>'
+        f'{pixel_svg(r["short"], "pixel--cert")}</span>'
+        f'<span class="cert__text"><strong>{esc(r["name"])}</strong> <span class="cert__scope">{esc(r["scope"])}</span></span></li>'
+        for r in comp["rows"])
+    return (f'<section class="group group--competition" id="competition" aria-labelledby="g-competition">'
+            f'{heading("g-competition", number, comp["title"])}<p class="note">{esc(comp["note"])}</p>'
+            f'<h3 class="certs__issuer">{esc(comp["org"])}</h3><ul class="certs__list">{rows}</ul></section>')
+
+
 def certifications(data: dict, number: int) -> str:
     """The certifications: CompTIA's and Cisco's, then the stackables, each shown with
     the certifications it is made of (pointing at one lights those up)."""
@@ -462,7 +475,7 @@ def page(data: dict) -> str:
     projects = [g for g in data["groups"] if g["id"] != "site"]
     site = [g for g in data["groups"] if g["id"] == "site"]
     builders = ([lambda n: about(data, n)] + [lambda n, g=g: group(g, n) for g in projects]
-                + [lambda n: skills(data, n), lambda n: certifications(data, n), lambda n: youtube(data, n),
+                + [lambda n: skills(data, n), lambda n: certifications(data, n), lambda n: competition(data, n), lambda n: youtube(data, n),
                    lambda n: steam(data, n), lambda n: yexico(data, n),
                    lambda n: favourites(data, n)]
                 + [lambda n, g=g: group(g, n) for g in site])

@@ -1325,6 +1325,12 @@ span.path {
   margin: 0;
 }
 
+/* Contest placings wear the gold. */
+.cert--medal .cert__label {
+  color: var(--carpet);
+  filter: drop-shadow(0 0 8px rgb(216 196 106 / 0.45));
+}
+
 /* Steam: the numbers in pixels ---------------------------------------------------- */
 
 .steam__summary {

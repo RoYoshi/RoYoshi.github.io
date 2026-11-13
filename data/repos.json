@@ -14,7 +14,7 @@
     "paragraphs": [
       "I build FE-XicoOS, a Linux desktop on Fedora, and the apps that ship with it. I also program The Far Backrooms, a multiplayer horror game that runs in the browser.",
       "On the game I do the programming, the game and level design, the website, the logos and the promo art. ₘₐᵣᵢᵢₖᵧᵤ is the other co-creator. I drew the FE-XicoOS top hat and the FE-Xico Doctor badge on this page too.",
-      "I hold eleven IT certifications from CompTIA and Cisco. Outside of that I play a lot of shooters, edit videos, and have been president of YEXICO since 2023."
+      "I hold eleven IT certifications from CompTIA and Cisco, and I'm a SkillUSA state champion in Internetworking. Outside of that I play a lot of shooters, edit videos, and have been president of YEXICO since 2023."
     ],
     "role_links": {
       "President of YEXICO": "#yexico"
@@ -438,6 +438,10 @@
           [
             "Certifications",
             "#certifications"
+          ],
+          [
+            "SkillUSA",
+            "#competition"
           ]
         ]
       }
@@ -530,6 +534,23 @@
           "netplus",
           "linuxplus"
         ]
+      }
+    ]
+  },
+  "competition": {
+    "title": "Competition",
+    "org": "SkillUSA",
+    "note": "I compete in SkillUSA's Internetworking contest: building and troubleshooting networks against the clock.",
+    "rows": [
+      {
+        "short": "1st",
+        "name": "State champion, Internetworking",
+        "scope": "First place in my state."
+      },
+      {
+        "short": "Nationals",
+        "name": "National competitor",
+        "scope": "Went on to compete at the SkillUSA national championships."
       }
     ]
   },
