@@ -513,7 +513,7 @@ def page(data: dict) -> str:
 <meta property="og:image" content="{SITE}assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{esc(data["owner"])}, drawn in pixels, with the FE-XicoOS, FE-Xico UpdateR and FE-Xico Doctor icons and the Level 0 carpet">
+<meta property="og:image:alt" content="{esc(data["owner"])}, drawn in pixels, with the FE-XicoOS, FE-Xico UpdateR and Doctor NoX icons and the Level 0 carpet">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="author" content="{esc(data["owner"])}">
 <link rel="stylesheet" href="assets/style.css">
@@ -625,7 +625,7 @@ def card(data: dict) -> None:
     draw = ImageDraw.Draw(image)
     draw.line([(0, 380), (1200, 380)], fill=MAGENTA, width=2)
     x = 96
-    for path in ("assets/icons/fe-xicoos.png", "assets/icons/fe-xico-updater.png", "assets/icons/fe-xico-doctor.png"):
+    for path in ("assets/icons/fe-xicoos.png", "assets/icons/fe-xico-updater.png", "assets/icons/doctor-nox.png"):
         icon = Image.open(ROOT / path).convert("RGBA").resize((128, 128), Image.LANCZOS)
         image.alpha_composite(icon, (x, 430))
         x += 168

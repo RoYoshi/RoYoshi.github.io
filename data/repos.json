@@ -1,6 +1,6 @@
 {
   "owner": "RoYoshi",
-  "as_of": "2026-11-12",
+  "as_of": "2026-11-14",
   "intro": "I'm RoYoshi. I build a Linux distro and the apps in it, co-make a horror game, hold eleven IT certifications, run a YouTube channel, and really really really really LOVE FPS/TPS and Video Games in general :D",
   "about": {
     "roles": [
@@ -13,7 +13,7 @@
     ],
     "paragraphs": [
       "I build FE-XicoOS, a Linux desktop on Fedora, and the apps that ship with it. I also program The Far Backrooms, a multiplayer horror game that runs in the browser.",
-      "On the game I do the programming, the game and level design, the website, the logos and the promo art. ₘₐᵣᵢᵢₖᵧᵤ is the other co-creator. I drew the FE-XicoOS top hat and the FE-Xico Doctor badge on this page too.",
+      "On the game I do the programming, the game and level design, the website, the logos and the promo art. ₘₐᵣᵢᵢₖᵧᵤ is the other co-creator. I drew the FE-XicoOS top hat on this page too.",
       "I hold eleven IT certifications from CompTIA and Cisco, and I'm a SkillUSA state champion in Internetworking. Outside of that I play a lot of shooters, edit videos, and have been president of YEXICO since 2023."
     ],
     "role_links": {
@@ -97,7 +97,7 @@
     {
       "id": "fe-xico",
       "title": "FE-XicoOS and its apps",
-      "note": "FE-Xico UpdateR and FE-Xico Doctor are separate repositories, and both are built into every FE-XicoOS image.",
+      "note": "FE-Xico UpdateR and Doctor NoX are separate repositories, and both are built into every FE-XicoOS image.",
       "repos": [
         {
           "name": "FE-XicoOS",
@@ -157,30 +157,27 @@
           }
         },
         {
-          "name": "FE-Xico Doctor",
-          "repo": "RoYoshi/Doctor",
+          "name": "Doctor NoX",
+          "repo": "RoYoshi/Doctor-NoX",
           "private": false,
-          "icon": "assets/icons/fe-xico-doctor.png",
+          "icon": "assets/icons/doctor-nox.png",
           "role": "child",
           "summary": [
-            "A health check for FE-XicoOS. It looks at the parts of the system that tend to go wrong (updates, services, graphics drivers, controllers, storage, Flatpaks, network and logs) and says what each finding means and what you can do about it.",
-            "It only looks: it never needs root, never changes anything, never goes online and never uploads anything. Reports can be shared with personal details such as names, addresses and keys replaced."
+            "A read-only health check for any Linux desktop. It looks at updates, security, drivers, storage, apps, the network and logs, and says what each finding means and what you can do about it. It knows the Fedora, Debian, Arch and openSUSE families, and runs its general checks everywhere else.",
+            "It only looks: it never needs root, never changes anything, never goes online and never uploads anything.",
+            "It grew out of FE-Xico Doctor, the health checker of FE-XicoOS, and still ships in every FE-XicoOS image."
           ],
           "inside": [],
           "facts": {
-            "created": "2026-09-23",
-            "pushed": "2026-11-06",
+            "created": "2026-11-12",
+            "pushed": "2026-11-13",
             "commits": 14,
-            "pulls": 4,
+            "pulls": null,
             "licence": "Apache-2.0",
-            "release": {
-              "name": "1.0.0",
-              "date": "2026-11-06",
-              "url": "https://github.com/RoYoshi/Doctor/releases/tag/v1.0.0"
-            },
+            "release": null,
             "languages": {
-              "Python": 301299,
-              "Shell": 7949
+              "Python": 414424,
+              "Shell": 16091
             }
           }
         }
@@ -318,8 +315,8 @@
             "#fe-xicoos"
           ],
           [
-            "FE-Xico Doctor",
-            "#fe-xico-doctor"
+            "Doctor NoX",
+            "#doctor-nox"
           ],
           [
             "The Far Backrooms",
@@ -360,8 +357,8 @@
             "#fe-xico-updater"
           ],
           [
-            "FE-Xico Doctor",
-            "#fe-xico-doctor"
+            "Doctor NoX",
+            "#doctor-nox"
           ],
           [
             "LaunchX",
